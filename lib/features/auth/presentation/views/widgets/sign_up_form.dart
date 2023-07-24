@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tasker/core/utils/app_router.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../../core/utils/constants.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
 import 'custom_form_error.dart';
 import 'custom_suffix_icon.dart';
 
-class LogInForm extends StatefulWidget {
-  const LogInForm({super.key});
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
 
   @override
-  State<LogInForm> createState() => _LogInFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _LogInFormState extends State<LogInForm> {
+class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
-  bool remember = false;
+  String? confirmPassword;
   final List<String> errors = [];
   @override
   Widget build(BuildContext context) {
@@ -27,35 +26,60 @@ class _LogInFormState extends State<LogInForm> {
       child: Column(
         children: [
           buildEmailFormField(),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           buildPasswordFormField(),
-          const SizedBox(
-            height: 30,
-          ),
-          CustomFormError(
-            errors: errors,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 30),
+          buildConfPasswordFormField(),
+          CustomFormError(errors: errors),
+          const SizedBox(height: 40),
           CustomButton(
             text: 'Continue',
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                context.pushReplacement(AppRouter.kAuthSuccessView, extra: 'Login');
-                // if all are valid then go to success view
-                // BlocProvider.of<AuthCubit>(context)
-                //     .signInUser(email: email!, password: password!);
-                // context
-                //     .read<AuthCubit>()
-                //     .signInUser(email: email!, password: password!);
+                context.push(AppRouter.kCompleteProfileView, extra: email);
+                // Go to complete profile view
+                // context.read<AuthCubit>().registerUser(
+                //   email: email!,
+                //   password: password!,
+                // );
               }
             },
           )
         ],
+      ),
+    );
+  }
+
+  TextFormField buildConfPasswordFormField() {
+    return TextFormField(
+      obscureText: true,
+      onSaved: (newValue) => confirmPassword = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kPassNullError);
+          confirmPassword = value;
+          if (password == confirmPassword) {
+            removeError(error: kMatchPassError);
+          }
+        }
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kPassNullError);
+          return '';
+        } else if (password != value) {
+          addError(error: kMatchPassError);
+          return '';
+        }
+        return null;
+      },
+      keyboardType: TextInputType.emailAddress,
+      decoration: const InputDecoration(
+        hintText: 'Re-enter your password',
+        labelText: 'Confirm Password',
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: 'assets/icons/Lock.svg'),
       ),
     );
   }
@@ -71,6 +95,7 @@ class _LogInFormState extends State<LogInForm> {
             removeError(error: kShortPassError);
           }
         }
+        password = value;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -99,8 +124,9 @@ class _LogInFormState extends State<LogInForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);
-        } else if (emailValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidEmailError);
+          if (emailValidatorRegExp.hasMatch(value)) {
+            removeError(error: kInvalidEmailError);
+          }
         }
       },
       validator: (value) {
