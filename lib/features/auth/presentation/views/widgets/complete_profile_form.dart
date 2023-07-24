@@ -42,8 +42,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                   // Go to OTP view
 
                   _formKey.currentState!.save();
-                  context.pushReplacement(AppRouter.kAuthSuccessView, extra: 'Register');
-
+                  //context.pop();
+                  context.go(AppRouter.kAuthSuccessView, extra: 'Register');
                   // UserModel userModel = UserModel(
                   //     firstName: firstName!,
                   //     lastName: lastName ?? '',

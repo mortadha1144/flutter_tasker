@@ -34,9 +34,9 @@ InputDecorationTheme inputDecorationTheme() {
 
 TextTheme textTheme() {
   return const TextTheme(
-    bodyLarge: TextStyle(color: kTextColor),
-    bodyMedium: TextStyle(color: kTextColor),
-  );
+      //bodyLarge: TextStyle(color: kTextColor),
+      //: TextStyle(color: kTextColor),
+      );
 }
 
 AppBarTheme appBarTheme() {
@@ -45,7 +45,11 @@ AppBarTheme appBarTheme() {
       elevation: 0,
       iconTheme: IconThemeData(color: Colors.black),
       centerTitle: true,
-      titleTextStyle: TextStyle(color: Color(0xff888888), fontSize: 18),
+      titleTextStyle: TextStyle(
+        //  color: Color(0xff888888),
+        color: Colors.black,
+        fontSize: 18,
+      ),
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: Colors.white, // <-- SEE HERE
         statusBarIconBrightness:

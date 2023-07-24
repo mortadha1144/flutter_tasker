@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tasker/features/home/presentation/views/home_view.dart';
+import 'package:flutter_tasker/core/utils/app_router.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/size_config.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
 
@@ -34,13 +35,17 @@ class AuthSuccessViewBody extends StatelessWidget {
           child: CustomButton(
             text: 'Go To home',
             onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HomeView(),
-                ),
-                (route) => false,
-              );
+              context.go(AppRouter.kHomeView);
+              // Router.neglect(context, () {
+              //   context.go(AppRouter.kHomeView);
+              // });
+              // Navigator.pushAndRemoveUntil(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const HomeView(),
+              //   ),
+              //   (route) => false,
+              // );
             },
           ),
         ),
