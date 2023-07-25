@@ -41,19 +41,20 @@ TextTheme textTheme() {
 
 AppBarTheme appBarTheme() {
   return const AppBarTheme(
-      color: Colors.white,
-      elevation: 0,
-      iconTheme: IconThemeData(color: Colors.black),
-      centerTitle: true,
-      titleTextStyle: TextStyle(
-        //  color: Color(0xff888888),
-        color: Colors.black,
-        fontSize: 18,
-      ),
-      systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: Colors.white, // <-- SEE HERE
-        statusBarIconBrightness:
-            Brightness.dark, //<-- For Android SEE HERE (dark icons)
-        statusBarBrightness: Brightness.light,
-      ));
+    color: Colors.white,
+    elevation: 0,
+    iconTheme: IconThemeData(color: Colors.black),
+    centerTitle: true,
+    titleTextStyle: TextStyle(
+      //  color: Color(0xff888888),
+      color: Colors.black,
+      fontSize: 18,
+    ),
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: Colors.white, // <-- SEE HERE
+      statusBarIconBrightness:
+          Brightness.dark, //<-- For Android SEE HERE (dark icons)
+      statusBarBrightness: Brightness.light,
+    ),
+  );
 }
