@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasker/features/home/presentation/views/widgets/home_view_list_view_item.dart';
 
 import 'home_view_header.dart';
 
@@ -7,13 +8,21 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30),
-      child: Column(
-        children: [
-          SizedBox(height: 20),
-          HomeViewHeader(),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            const HomeViewHeader(),
+            const SizedBox(height: 20),
+            ListView.builder(
+              itemCount: 4,
+              shrinkWrap: true,
+              itemBuilder: (context, index) => const HomeViewListViewItem(),
+            )
+          ],
+        ),
       ),
     );
   }

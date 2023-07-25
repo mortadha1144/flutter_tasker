@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasker/core/utils/app_router.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeViewHeader extends StatelessWidget {
   const HomeViewHeader({
@@ -36,7 +38,9 @@ class HomeViewHeader extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            context.push(AppRouter.kAddTaskView);
+          },
           child: const Text('+ New Task'),
         ),
       ],

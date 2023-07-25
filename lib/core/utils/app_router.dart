@@ -2,10 +2,10 @@ import 'package:flutter_tasker/features/auth/presentation/views/auth_success_vie
 import 'package:flutter_tasker/features/auth/presentation/views/complete_profile_view.dart';
 import 'package:flutter_tasker/features/auth/presentation/views/log_in_view.dart';
 import 'package:flutter_tasker/features/auth/presentation/views/sign_up_view.dart';
+import 'package:flutter_tasker/features/add_task/presentation/views/add_task_view.dart';
 import 'package:flutter_tasker/features/home/presentation/views/home_view.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/onboarding/presentation/views/onboarding.dart';
 
 abstract class AppRouter {
   static const kLogInView = '/logInView';
@@ -13,12 +13,17 @@ abstract class AppRouter {
   static const kCompleteProfileView = '/completeProfileView';
   static const kHomeView = '/homeView';
   static const kAuthSuccessView = '/authSuccessView';
+  static const kAddTaskView = '/addTaskView';
 
   static final router = GoRouter(
     routes: [
+      // GoRoute(
+      //   path: '/',
+      //   builder: (context, state) => const OnBoardingView(),
+      // ),
       GoRoute(
         path: '/',
-        builder: (context, state) => const OnBoardingView(),
+        builder: (context, state) => const HomeView(),
       ),
       GoRoute(
         path: kLogInView,
@@ -43,6 +48,10 @@ abstract class AppRouter {
       GoRoute(
         path: kHomeView,
         builder: (context, state) => const HomeView(),
+      ),
+      GoRoute(
+        path: kAddTaskView,
+        builder: (context, state) => const AddTaskView(),
       ),
     ],
   );

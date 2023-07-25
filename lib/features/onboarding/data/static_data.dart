@@ -1,6 +1,6 @@
 List<Map<String, String>> onBoardingData = [
   {
-    "text": "Welcome to Taske, Let’s organize your missions",
+    "text": "Welcome to Tasker, Let’s organize your missions",
     "image": "assets/images/onboarding_1.svg"
   },
   {
