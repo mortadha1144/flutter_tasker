@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tasker/core/utils/app_router.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/constants.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
 import 'custom_form_error.dart';
@@ -15,9 +13,11 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
+  String? name;
   String? email;
   String? password;
   String? confirmPassword;
+  int? age;
   final List<String> errors = [];
   @override
   Widget build(BuildContext context) {
@@ -25,11 +25,13 @@ class _SignUpFormState extends State<SignUpForm> {
       key: _formKey,
       child: Column(
         children: [
+          buildNameFormField(),
           buildEmailFormField(),
-          const SizedBox(height: 30),
+          //const SizedBox(height: 30),
           buildPasswordFormField(),
-          const SizedBox(height: 30),
+          // const SizedBox(height: 30),
           buildConfPasswordFormField(),
+          buildAgeFormField(),
           CustomFormError(errors: errors),
           const SizedBox(height: 40),
           CustomButton(
@@ -37,7 +39,7 @@ class _SignUpFormState extends State<SignUpForm> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                context.push(AppRouter.kCompleteProfileView, extra: email);
+                //context.push(AppRouter.kCompleteProfileView, extra: email);
                 // Go to complete profile view
                 // context.read<AuthCubit>().registerUser(
                 //   email: email!,
@@ -47,6 +49,32 @@ class _SignUpFormState extends State<SignUpForm> {
             },
           )
         ],
+      ),
+    );
+  }
+
+  TextFormField buildAgeFormField() {
+    return TextFormField(
+      onSaved: (newValue) => age = int.parse(newValue ?? '0'),
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kAgelNullError);
+        }
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kAgelNullError);
+          return '';
+        }
+        return null;
+      },
+      keyboardType: TextInputType.number,
+      decoration: const InputDecoration(
+        hintText: 'Enter your Age',
+        labelText: 'Age',
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon:
+            CustomSurffixIcon(svgIcon: 'assets/icons/Question mark.svg'),
       ),
     );
   }
@@ -144,6 +172,31 @@ class _SignUpFormState extends State<SignUpForm> {
         labelText: 'Email',
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: 'assets/icons/Mail.svg'),
+      ),
+    );
+  }
+
+  TextFormField buildNameFormField() {
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      onSaved: (newValue) => name = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kNamelNullError);
+        }
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kNamelNullError);
+          return '';
+        }
+        return null;
+      },
+      decoration: const InputDecoration(
+        hintText: 'Enter your Name',
+        labelText: 'Name',
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: 'assets/icons/User.svg'),
       ),
     );
   }

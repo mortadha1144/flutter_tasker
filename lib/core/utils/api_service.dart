@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 
 class ApiService {
@@ -14,6 +13,11 @@ class ApiService {
 
   Future<List<dynamic>> get({required String endPoin}) async {
     var response = await _dio.get('$_baseUrl$endPoin');
+    return response.data;
+  }
+
+  post({required String endPoin,Object? data,Options? options}) async {
+    var response = await _dio.post('$_baseUrl$endPoin',data: data,options: options);
     return response.data;
   }
 }
