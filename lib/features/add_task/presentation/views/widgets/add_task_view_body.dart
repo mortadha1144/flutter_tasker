@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tasker/features/add_task/presentation/views/widgets/dotted_category_item.dart';
 
+import '../../../../../core/utils/widgets/custom_button.dart';
+import 'add_image_button.dart';
 import 'add_task_text_field.dart';
 
 class AddTaskViewBody extends StatelessWidget {
@@ -8,48 +9,88 @@ class AddTaskViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const categories = [
-      {
-        'color': Colors.green,
-        'title': 'Learning',
-      },
-      {
-        'color': Colors.blue,
-        'title': 'Working',
-      },
-      {
-        'color': Colors.yellow,
-        'title': 'General',
-      },
-    ];
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+    return const SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 10),
+            AddTaskForm(),
+            //const DateAndTimeSection(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AddTaskForm extends StatefulWidget {
+  const AddTaskForm({
+    super.key,
+  });
+
+  @override
+  State<AddTaskForm> createState() => _AddTaskFormState();
+}
+
+class _AddTaskFormState extends State<AddTaskForm> {
+  final _formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 20),
           const CustomTitleText(text: 'Task Title'),
-          const AddTaskTextField(
+          AddTaskTextField(
             text: 'Add Task Name..',
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Task Title is Required';
+              }
+              return null;
+            },
           ),
           const CustomTitleText(text: 'Description'),
-          const AddTaskTextField(
+          AddTaskTextField(
             text: 'Add Description',
-            height: 120,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Task Description is Required';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 8),
-          const CustomTitleText(text: 'Category'),
-          Row(
-            children: [
-              ...List.generate(
-                categories.length,
-                (index) => DottedCategoryItem(
-                  title: categories[index]['title'] as String,
-                  color: categories[index]['color'] as Color,
-                ),
-              )
-            ],
-          )
+          const CustomTitleText(
+            text: 'Due Date',
+          ),
+          SizedBox(
+            width: 200,
+            child: AddTaskTextField(
+              text: 'dd/mm/yy',
+              icon: Icons.calendar_month,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Due Date is Required';
+                }
+                return null;
+              },
+            ),
+          ),
+          const SizedBox(height: 10),
+          const CustomTitleText(text: 'Add Image'),
+          const AddImageButton(),
+          CustomButton(
+            text: 'Add Task',
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+              }
+            },
+          ),
         ],
       ),
     );

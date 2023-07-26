@@ -5,6 +5,7 @@ import 'package:flutter_tasker/features/auth/presentation/views/sign_up_view.dar
 import 'package:flutter_tasker/features/add_task/presentation/views/add_task_view.dart';
 import 'package:flutter_tasker/features/home/presentation/views/home_view.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/onboarding/presentation/views/onboarding.dart';
 
 
 abstract class AppRouter {
@@ -17,14 +18,14 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
-      // GoRoute(
-      //   path: '/',
-      //   builder: (context, state) => const OnBoardingView(),
-      // ),
       GoRoute(
         path: '/',
-        builder: (context, state) => const HomeView(),
+        builder: (context, state) => const OnBoardingView(),
       ),
+      // GoRoute(
+      //   path: '/',
+      //   builder: (context, state) => const HomeView(),
+      // ),
       GoRoute(
         path: kLogInView,
         builder: (context, state) => const LogInView(),
