@@ -12,11 +12,18 @@ class AuthRepo {
 
   register(Map<String, dynamic> userData) async {
     FormData formData = FormData.fromMap(userData);
-    await _apiService.post(
-      endPoin: 'Users/register',
-      options: Options(
-        contentType: Headers.multipartFormDataContentType,
-      ),
-    );
+    try {
+      await _apiService
+          .post(
+            endPoin: 'Users/register',
+            data: formData,
+            options: Options(
+              contentType: Headers.multipartFormDataContentType,
+            ),
+          )
+          .then((value) => print(value['name']));
+    } on Exception catch (e) {
+      print(e.toString());
+    }
   }
 }

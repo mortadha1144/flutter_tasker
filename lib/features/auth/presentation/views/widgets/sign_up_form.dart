@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasker/features/auth/data/models/register_model.dart';
+import 'package:flutter_tasker/features/auth/data/repos/auth_repo.dart';
 import '../../../../../core/utils/constants.dart';
+import '../../../../../core/utils/theme.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
 import 'custom_form_error.dart';
 import 'custom_suffix_icon.dart';
@@ -26,11 +29,13 @@ class _SignUpFormState extends State<SignUpForm> {
       child: Column(
         children: [
           buildNameFormField(),
+          const SizedBox(height: 20),
           buildEmailFormField(),
-          //const SizedBox(height: 30),
+          const SizedBox(height: 20),
           buildPasswordFormField(),
-          // const SizedBox(height: 30),
+          const SizedBox(height: 20),
           buildConfPasswordFormField(),
+          const SizedBox(height: 20),
           buildAgeFormField(),
           CustomFormError(errors: errors),
           const SizedBox(height: 40),
@@ -39,12 +44,15 @@ class _SignUpFormState extends State<SignUpForm> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                //context.push(AppRouter.kCompleteProfileView, extra: email);
-                // Go to complete profile view
-                // context.read<AuthCubit>().registerUser(
-                //   email: email!,
-                //   password: password!,
-                // );
+                RegisterModel registerModel = RegisterModel(
+                  name: name,
+                  email: email,
+                  password: confirmPassword,
+                  age: age,
+                );
+
+                AuthRepo authRepo = AuthRepo();
+                authRepo.register(registerModel.toJson());
               }
             },
           )
@@ -75,7 +83,7 @@ class _SignUpFormState extends State<SignUpForm> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon:
             CustomSurffixIcon(svgIcon: 'assets/icons/Question mark.svg'),
-      ),
+      ).applyDefaults(inputDecorationTheme()),
     );
   }
 
@@ -108,7 +116,7 @@ class _SignUpFormState extends State<SignUpForm> {
         labelText: 'Confirm Password',
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: 'assets/icons/Lock.svg'),
-      ),
+      ).applyDefaults(inputDecorationTheme()),
     );
   }
 
@@ -141,7 +149,7 @@ class _SignUpFormState extends State<SignUpForm> {
         labelText: 'Password',
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: 'assets/icons/Lock.svg'),
-      ),
+      ).applyDefaults(inputDecorationTheme()),
     );
   }
 
@@ -172,7 +180,7 @@ class _SignUpFormState extends State<SignUpForm> {
         labelText: 'Email',
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: 'assets/icons/Mail.svg'),
-      ),
+      ).applyDefaults(inputDecorationTheme()),
     );
   }
 
@@ -197,7 +205,7 @@ class _SignUpFormState extends State<SignUpForm> {
         labelText: 'Name',
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: 'assets/icons/User.svg'),
-      ),
+      ).applyDefaults(inputDecorationTheme()),
     );
   }
 
