@@ -17,15 +17,10 @@ class AuthProvider extends StateNotifier<AuthState> {
 
   Future<void> login(String name, String password) async {
     state = const AuthState.loading();
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
     var result = await _authRepo.login(name, password);
-
     result.fold(
       (faile) => state = AuthState.error(faile.errMessagel),
-      (success) async{
-        await prefs.setString('token', success.token??'');
-        return state = AuthState.loaded(success);
-      },
+      (success) async => state = AuthState.loaded(success),
     );
   }
 }

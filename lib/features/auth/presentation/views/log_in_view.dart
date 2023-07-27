@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/size_config.dart';
 import 'widgets/log_in_view_body.dart';
 
 class LogInView extends StatelessWidget {
@@ -6,6 +7,7 @@ class LogInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Log In'),

@@ -20,15 +20,6 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: '/',
-        redirect: (context, state) async {
-          // final SharedPreferences prefs = await SharedPreferences.getInstance();
-          // final bool isOnBoardingShown =
-          //     prefs.getBool('showOnBoarding') ?? false;
-          // if (isOnBoardingShown) {
-          //   return '/signin';
-          // }
-          return null;
-        },
         builder: (context, state) => const OnBoardingView(),
       ),
       // GoRoute(
@@ -64,5 +55,13 @@ abstract class AppRouter {
         builder: (context, state) => const AddTaskView(),
       ),
     ],
+    redirect: (context, state) async {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final bool isOnBoardingShown = prefs.getBool('showOnBoarding') ?? false;
+      if (isOnBoardingShown) {
+        return '/logInView';
+      }
+      return null;
+    },
   );
 }
