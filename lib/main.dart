@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'core/utils/app_router.dart';
 import 'core/utils/theme.dart';
 
-void main() {
+void main()async {
   runApp(
     const ProviderScope(
       child: MyApp(),
