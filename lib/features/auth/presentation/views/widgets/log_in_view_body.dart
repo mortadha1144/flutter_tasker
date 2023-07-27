@@ -27,7 +27,7 @@ class LogInViewBody extends StatelessWidget {
                 style: headingStyle,
               ),
               const Text(
-                'Log in with your email and password',
+                'Log in with your name and password',
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: SizeConfig.screenHeight * .08),

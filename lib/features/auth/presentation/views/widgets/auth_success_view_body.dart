@@ -33,9 +33,14 @@ class AuthSuccessViewBody extends StatelessWidget {
         SizedBox(
           width: SizeConfig.screenWidth * .6,
           child: CustomButton(
-            text: 'Go To home',
+            text: 'Go To ${text == 'Register' ? 'Login' : 'Home'}',
             onPressed: () {
-              context.go(AppRouter.kHomeView);
+              if (text == 'Login') {
+                context.go(AppRouter.kHomeView);
+              } else {
+                context.go(AppRouter.kLogInView);
+              }
+
               // Router.neglect(context, () {
               //   context.go(AppRouter.kHomeView);
               // });

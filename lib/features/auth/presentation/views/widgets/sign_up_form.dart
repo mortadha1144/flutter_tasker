@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tasker/core/utils/app_router.dart';
 import 'package:flutter_tasker/features/auth/data/models/register_model.dart';
-import 'package:flutter_tasker/features/auth/data/repos/auth_repo.dart';
+import 'package:flutter_tasker/features/auth/presentation/providers/register_states.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/constants.dart';
 import '../../../../../core/utils/theme.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
+import '../../providers/register_provider.dart';
 import 'custom_form_error.dart';
 import 'custom_suffix_icon.dart';
 
-class SignUpForm extends StatefulWidget {
+class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({super.key});
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
+  SignUpFormState createState() => SignUpFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class SignUpFormState extends ConsumerState<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   String? name;
   String? email;
@@ -24,6 +28,8 @@ class _SignUpFormState extends State<SignUpForm> {
   final List<String> errors = [];
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(registerProvider);
+
     return Form(
       key: _formKey,
       child: Column(
@@ -41,6 +47,7 @@ class _SignUpFormState extends State<SignUpForm> {
           const SizedBox(height: 40),
           CustomButton(
             text: 'Continue',
+            isLoading: state.isLoading,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
@@ -51,8 +58,22 @@ class _SignUpFormState extends State<SignUpForm> {
                   age: age,
                 );
 
-                AuthRepo authRepo = AuthRepo();
-                authRepo.register(registerModel.toJson());
+                ref
+                    .watch(registerProvider.notifier)
+                    .register(registerModel)
+                    .then((value) {
+                  state.whenOrNull(
+                    loaded: (userModel) {
+                      context.pushReplacement(AppRouter.kAuthSuccessView,
+                          extra: 'Register');
+                    },
+                    error: (error) {
+                      setState(() {
+                        addError(error: error);
+                      });
+                    },
+                  );
+                });
               }
             },
           )

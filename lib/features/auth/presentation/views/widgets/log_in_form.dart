@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tasker/core/utils/app_router.dart';
+import 'package:flutter_tasker/core/utils/theme.dart';
+import 'package:flutter_tasker/features/auth/presentation/providers/auth_provider.dart';
+import 'package:flutter_tasker/features/auth/presentation/providers/auth_state.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../core/utils/constants.dart';
@@ -7,21 +11,22 @@ import '../../../../../core/utils/widgets/custom_button.dart';
 import 'custom_form_error.dart';
 import 'custom_suffix_icon.dart';
 
-class LogInForm extends StatefulWidget {
+class LogInForm extends ConsumerStatefulWidget {
   const LogInForm({super.key});
 
   @override
-  State<LogInForm> createState() => _LogInFormState();
+  LogInFormState createState() => LogInFormState();
 }
 
-class _LogInFormState extends State<LogInForm> {
+class LogInFormState extends ConsumerState<LogInForm> {
   final _formKey = GlobalKey<FormState>();
-  String? email;
+  String? name;
   String? password;
   bool remember = false;
   final List<String> errors = [];
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(authProvider);
     return Form(
       key: _formKey,
       child: Column(
@@ -42,10 +47,21 @@ class _LogInFormState extends State<LogInForm> {
           ),
           CustomButton(
             text: 'Continue',
-            onPressed: () {
+            isLoading: state.isLoading,
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                context.pushReplacement(AppRouter.kAuthSuccessView, extra: 'Login');
+                FocusManager.instance.primaryFocus?.unfocus();
+                await ref.watch(authProvider.notifier).login(name!, password!);
+                ref.watch(authProvider).whenOrNull(
+                      loaded: (authModel) => context
+                          .push(AppRouter.kAuthSuccessView, extra: 'Login'),
+                      error: (error) {
+                        addError(error: error);
+                      },
+                    );
+                // context.pushReplacement(AppRouter.kAuthSuccessView,
+                //     extra: 'Login');
                 // if all are valid then go to success view
                 // BlocProvider.of<AuthCubit>(context)
                 //     .signInUser(email: email!, password: password!);
@@ -88,37 +104,32 @@ class _LogInFormState extends State<LogInForm> {
         labelText: 'Password',
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: 'assets/icons/Lock.svg'),
-      ),
+      ).applyDefaults(inputDecorationTheme()),
     );
   }
 
   TextFormField buildEmailFormField() {
     return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      keyboardType: TextInputType.name,
+      onSaved: (newValue) => name = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kEmailNullError);
-        } else if (emailValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidEmailError);
+          removeError(error: kNamelNullError);
         }
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kEmailNullError);
-          return '';
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidEmailError);
+          addError(error: kNamelNullError);
           return '';
         }
         return null;
       },
       decoration: const InputDecoration(
-        hintText: 'Enter your email',
-        labelText: 'Email',
+        hintText: 'Enter your Name',
+        labelText: 'Name',
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: 'assets/icons/Mail.svg'),
-      ),
+        suffixIcon: CustomSurffixIcon(svgIcon: 'assets/icons/User.svg'),
+      ).applyDefaults(inputDecorationTheme()),
     );
   }
 
