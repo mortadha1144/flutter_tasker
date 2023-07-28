@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tasker/core/utils/providers/app_providers.dart';
 import 'package:flutter_tasker/features/auth/presentation/views/auth_success_view.dart';
 import 'package:flutter_tasker/features/auth/presentation/views/complete_profile_view.dart';
 import 'package:flutter_tasker/features/auth/presentation/views/log_in_view.dart';
@@ -7,6 +9,9 @@ import 'package:flutter_tasker/features/home/presentation/views/home_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/onboarding/presentation/views/onboarding.dart';
+import 'shared_prefrences.dart';
+
+
 
 abstract class AppRouter {
   static const kLogInView = '/logInView';
@@ -15,6 +20,7 @@ abstract class AppRouter {
   static const kHomeView = '/homeView';
   static const kAuthSuccessView = '/authSuccessView';
   static const kAddTaskView = '/addTaskView';
+
 
   static final router = GoRouter(
     routes: [
@@ -56,8 +62,8 @@ abstract class AppRouter {
       ),
     ],
     redirect: (context, state) async {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final bool isOnBoardingShown = prefs.getBool('showOnBoarding') ?? false;
+      
+      final bool isOnBoardingShown = SharedPrefs.instance.getBool('showOnBoarding') ?? false;
       if (isOnBoardingShown) {
         return '/logInView';
       }
