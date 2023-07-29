@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasker/core/utils/constants.dart';
+import 'package:flutter_tasker/core/utils/shared_prefrences.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../core/utils/app_router.dart';
 import '../../../data/static_data.dart';
 import 'onboarding_action.dart';
@@ -38,11 +39,9 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
                 currentPage: currentPage,
                 itemCount: onBoardingData.length,
                 onPressed: () async {
-                  final SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  await prefs.setBool('showOnBoarding', true);
-
-                  context.pushReplacement(AppRouter.kLogInView);
+                  await SharedPrefs.setBool(kshowOnBoarding, true).then(
+                    (_) => context.pushReplacement(AppRouter.kLogInView),
+                  );
                 },
               ),
             ),

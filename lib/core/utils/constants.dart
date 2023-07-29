@@ -22,3 +22,4 @@ const String kNamelNullError = "Please Enter your name";
 const String kAgelNullError = "Please Enter your age";
 const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kAddressNullError = "Please Enter your address";
+const String kshowOnBoarding = 'showOnBoarding';

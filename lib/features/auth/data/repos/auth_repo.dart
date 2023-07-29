@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_tasker/core/errors/failures.dart';
 import 'package:flutter_tasker/core/utils/api_service.dart';
+import 'package:flutter_tasker/core/utils/shared_prefrences.dart';
 import 'package:flutter_tasker/features/auth/data/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,8 +18,6 @@ class AuthRepo {
   AuthRepo._internal(this._apiService);
 
   final ApiService _apiService;
-
-  
 
   Future<Either<Failure, UserModel>> register(
       Map<String, dynamic> userData) async {
@@ -46,15 +45,16 @@ class AuthRepo {
       'password': password,
     };
 
-    
     try {
       Map<String, dynamic> result = await _apiService.post(
         endPoin: 'Users/login',
         data: jsonEncode(data),
         options: Options(contentType: Headers.jsonContentType),
       );
-      
-      return right(AuthModel.fromJson(result));
+
+      AuthModel auth = AuthModel.fromJson(result);
+      await SharedPrefs.setAccessToken(auth.token!);
+      return right(auth);
     } catch (e) {
       if (e is DioException) {
         return left(ServerFailure.fromDioExeotion(e));

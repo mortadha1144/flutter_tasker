@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tasker/features/auth/data/repos/auth_repo.dart';
 import 'package:flutter_tasker/features/auth/presentation/providers/auth_state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final authProvider = StateNotifierProvider<AuthProvider, AuthState>((ref) {
   return AuthProvider(authRepo: AuthRepo());
@@ -20,7 +19,7 @@ class AuthProvider extends StateNotifier<AuthState> {
     var result = await _authRepo.login(name, password);
     result.fold(
       (faile) => state = AuthState.error(faile.errMessagel),
-      (success) async => state = AuthState.loaded(success),
+      (success) => state = AuthState.loaded(success),
     );
   }
 }

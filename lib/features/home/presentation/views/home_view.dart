@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tasker/core/utils/shared_prefrences.dart';
 
 import 'widgets/home_view_body.dart';
 
@@ -34,7 +35,10 @@ class HomeView extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    var keys = SharedPrefs.instance.getKeys();
+                    print(keys);
+                  },
                   icon: const Icon(CupertinoIcons.calendar),
                 ),
                 IconButton(
