@@ -17,19 +17,19 @@ class SharedPrefs {
       instance.setBool(key, value);
 
 // More abstraction
-  static const _kAccessToken = 'token';
-  static const _kUserData = 'token';
+  static const kAccessToken = 'token';
+  static const kUserData = 'user';
 
   static Future<bool> setAccessToken(String value) =>
-      instance.setString(_kAccessToken, value);
+      instance.setString(kAccessToken, value);
 
-  static String? getAccessToken() => instance.getString(_kAccessToken);
+  static String? getAccessToken() => instance.getString(kAccessToken);
 
   static Future<bool> setUser(Map<String, dynamic> user) =>
-      instance.setString(_kUserData, jsonEncode(user));
+      instance.setString(kUserData, jsonEncode(user));
 
   static UserModel getUser() {
-    String? userPref = instance.getString(_kUserData);
+    String? userPref = instance.getString(kUserData);
     Map<String, dynamic> userMap =
         jsonDecode(userPref!) as Map<String, dynamic>;
     return UserModel.fromJson(userMap);

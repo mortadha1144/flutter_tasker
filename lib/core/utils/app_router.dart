@@ -7,6 +7,7 @@ import 'package:flutter_tasker/features/auth/presentation/views/sign_up_view.dar
 import 'package:flutter_tasker/features/add_task/presentation/views/add_task_view.dart';
 import 'package:flutter_tasker/features/home/presentation/views/home_view.dart';
 import 'package:flutter_tasker/features/onboarding/presentation/views/onboarding.dart';
+import 'package:flutter_tasker/features/profile/presentation/views/profile_view.dart';
 import 'package:go_router/go_router.dart';
 import 'shared_prefrences.dart';
 
@@ -15,21 +16,21 @@ abstract class AppRouter {
   static const kLogInView = '/logInView';
   static const kSignUpView = '/signUpView';
   static const kCompleteProfileView = '/completeProfileView';
-  static const kHomeView = '/homeView';
   static const kAuthSuccessView = '/authSuccessView';
   static const kAddTaskView = '/addTaskView';
+  static const kProfileView = '/profileView';
 
   static final router = GoRouter(
     routes: [
-      // GoRoute(
-      //   path: '/',
-      //   builder: (context, state) {
-      //     UserModel user = SharedPrefs.getUser();
-      //     return const HomeView();
-      //   },
-      // ),
       GoRoute(
         path: '/',
+        builder: (context, state) {
+          UserModel user = SharedPrefs.getUser();
+          return  HomeView(user: user,);
+        },
+      ),
+      GoRoute(
+        path: kOnBoardingView,
         builder: (context, state) => const OnBoardingView(),
       ),
       GoRoute(
@@ -52,26 +53,30 @@ abstract class AppRouter {
           text: state.extra as String,
         ),
       ),
-      GoRoute(
-        path: kHomeView,
-        builder: (context, state) => const HomeView(),
-      ),
+      // GoRoute(
+      //   path: kHomeView,
+      //   builder: (context, state) => const HomeView(),
+      // ),
       GoRoute(
         path: kAddTaskView,
         builder: (context, state) => const AddTaskView(),
       ),
+      GoRoute(
+        path: kProfileView,
+        builder: (context, state) => const ProfileView(),
+      ),
     ],
-    // redirect: (context, state) {
-    //   final bool isOnBoardingShown =
-    //       SharedPrefs.getBool(kshowOnBoarding) ?? false;
-    //   final bool isUserLoggedIn = checkUserAuth();
-    //   if (!isOnBoardingShown) {
-    //     return kOnBoardingView;
-    //   } else if (isUserLoggedIn) {
-    //     return kLogInView;
-    //   }
-    //   return null;
-    // },
+    redirect: (context, state) {
+      final bool isOnBoardingShown =
+          SharedPrefs.getBool(kshowOnBoarding) ?? false;
+      final bool isUserLoggedIn = checkUserAuth();
+      if (!isOnBoardingShown) {
+        return kOnBoardingView;
+      } else if (!isUserLoggedIn) {
+        return kLogInView;
+      }
+      return null;
+    },
   );
 
   static bool checkUserAuth() {

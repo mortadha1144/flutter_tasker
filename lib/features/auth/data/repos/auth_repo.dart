@@ -6,7 +6,6 @@ import 'package:flutter_tasker/core/errors/failures.dart';
 import 'package:flutter_tasker/core/utils/api_service.dart';
 import 'package:flutter_tasker/core/utils/shared_prefrences.dart';
 import 'package:flutter_tasker/features/auth/data/models/user_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/auth_model.dart';
 
@@ -53,6 +52,8 @@ class AuthRepo {
       );
 
       AuthModel auth = AuthModel.fromJson(result);
+
+      await SharedPrefs.setUser(auth.userModel!.toJson());
       await SharedPrefs.setAccessToken(auth.token!);
       return right(auth);
     } catch (e) {

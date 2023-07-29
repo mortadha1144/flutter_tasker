@@ -36,7 +36,7 @@ class AuthSuccessViewBody extends StatelessWidget {
             text: 'Go To ${text == 'Register' ? 'Login' : 'Home'}',
             onPressed: () {
               if (text == 'Login') {
-                context.go(AppRouter.kHomeView);
+                context.go('/');
               } else {
                 context.go(AppRouter.kLogInView);
               }

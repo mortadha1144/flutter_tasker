@@ -1,11 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tasker/core/utils/app_router.dart';
 import 'package:flutter_tasker/core/utils/shared_prefrences.dart';
+import 'package:flutter_tasker/features/auth/data/models/user_model.dart';
+import 'package:go_router/go_router.dart';
 
 import 'widgets/home_view_body.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  const HomeView({super.key, required this.user});
+
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -15,18 +22,25 @@ class HomeView extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         title: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: Colors.amber.shade300,
-            radius: 25,
-            backgroundImage: const AssetImage('assets/images/profile_test.jpg'),
+          leading: GestureDetector(
+            onTap: () {
+              context.push(AppRouter.kProfileView);
+            },
+            child: CircleAvatar(
+              backgroundColor: Colors.amber.shade300,
+              radius: 25,
+              backgroundImage:
+                  const AssetImage('assets/images/profile_test.jpg'),
+            ),
           ),
           title: Text(
             'Hello',
             style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
           ),
-          subtitle: const Text(
-            'Mohammed Ali',
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+          subtitle: Text(
+            user.name!,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ),
         actions: [
@@ -35,14 +49,26 @@ class HomeView extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                  onPressed: () {
-                    var keys = SharedPrefs.instance.getKeys();
-                    print(keys);
+                  onPressed: () async {
+                    Map<String, dynamic> user = {
+                      'Username': 'tom',
+                      'Password': 123
+                    };
+
+                    await SharedPrefs.instance
+                        .setString('user', jsonEncode(user))
+                        .then((value) => print(value));
                   },
                   icon: const Icon(CupertinoIcons.calendar),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    String userPref = SharedPrefs.instance.getString('user')!;
+                    Map<String, dynamic> userMap =
+                        jsonDecode(userPref) as Map<String, dynamic>;
+                    //var data = SharedPrefs.instance.getKeys();
+                    print(userMap);
+                  },
                   icon: const Icon(CupertinoIcons.bell),
                 ),
               ],
