@@ -48,7 +48,8 @@ class HomeRepo {
       for (var task in data) {
         tasks.add(TaskModel.fromJson(task));
       }
-      return right(tasks);
+
+      return right(tasks.reversed.toList());
     } catch (e) {
       if (e is DioException) {
         return left(ServerFailure.fromDioExeotion(e));

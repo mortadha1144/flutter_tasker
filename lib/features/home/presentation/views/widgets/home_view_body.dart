@@ -24,9 +24,9 @@ class HomeViewBody extends ConsumerWidget {
               loaded: (tasks) => ListView.builder(
                 itemCount: tasks.length,
                 shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) => HomeViewListViewItem(
                   task: tasks[index],
-                  
                 ),
               ),
               error: (error) => Text(error),

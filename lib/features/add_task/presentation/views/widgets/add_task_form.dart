@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tasker/features/add_task/presentation/providers/add_task_provider.dart';
@@ -24,9 +25,8 @@ class AddTaskFormState extends ConsumerState<AddTaskForm> {
   String? taskTitle;
   String? taskDescription;
   String? dueDate;
-  FocusNode focusNode = FocusNode();
+  String? path;
 
-  TextEditingController textarea = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(addTaskProvider);
@@ -37,7 +37,6 @@ class AddTaskFormState extends ConsumerState<AddTaskForm> {
         children: [
           const CustomTitleText(text: 'Task Title'),
           AddTaskTextField(
-            focusNode: focusNode,
             text: 'Add Task Title..',
             validator: (value) {
               if (value!.isEmpty) {
@@ -65,7 +64,7 @@ class AddTaskFormState extends ConsumerState<AddTaskForm> {
           SizedBox(
             width: 200,
             child: AddTaskTextField(
-              text: 'dd/mm/yy',
+              text: 'yyyy/mm/dd',
               icon: Icons.calendar_month,
               validator: (value) {
                 if (value!.isEmpty) {
@@ -78,7 +77,18 @@ class AddTaskFormState extends ConsumerState<AddTaskForm> {
           ),
           const SizedBox(height: 10),
           const CustomTitleText(text: 'Add Image'),
-          const AddImageButton(),
+          InkWell(
+            onTap: () async {
+              final result =
+                  await FilePicker.platform.pickFiles(type: FileType.image);
+              if (result != null) {
+                setState(() {
+                  path = result.files.single.path;
+                });
+              }
+            },
+            child:  AddImageButton(path: path,),
+          ),
           const SizedBox(height: 20),
           CustomButton(
             text: 'Add Task',
@@ -96,7 +106,6 @@ class AddTaskFormState extends ConsumerState<AddTaskForm> {
                   (value) {
                     customSnackBar(context, 'Task Added Successfully');
                     _formKey.currentState!.reset();
-                    focusNode.requestFocus();
                   },
                 );
               }
