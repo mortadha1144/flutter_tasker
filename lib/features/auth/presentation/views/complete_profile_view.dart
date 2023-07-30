@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'widgets/complete_profile_view_body.dart';

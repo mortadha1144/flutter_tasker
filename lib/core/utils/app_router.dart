@@ -26,7 +26,9 @@ abstract class AppRouter {
         path: '/',
         builder: (context, state) {
           UserModel user = SharedPrefs.getUser();
-          return  HomeView(user: user,);
+          return HomeView(
+            user: user,
+          );
         },
       ),
       GoRoute(

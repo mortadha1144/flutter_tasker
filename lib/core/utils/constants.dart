@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 const kPrimaryColor = Color(0xFFFF7643);
 const kTextColor = Color(0xFF757575);
 const kAnimationDuration = Duration(milliseconds: 200);
-const headingStyle =  TextStyle(
+const headingStyle = TextStyle(
   color: Colors.black,
-  fontSize:28,
+  fontSize: 28,
   fontWeight: FontWeight.bold,
   height: 1.5,
 );

@@ -5,14 +5,11 @@ import 'dotted_category_item.dart';
 class CategoriesList extends StatelessWidget {
   const CategoriesList({
     super.key,
-   
   });
-
- 
 
   @override
   Widget build(BuildContext context) {
-     const categories = [
+    const categories = [
       {
         'color': Colors.green,
         'title': 'Learning',

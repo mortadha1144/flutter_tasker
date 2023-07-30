@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/constants.dart';
 
-
 class CustomAnimatedContainer extends StatelessWidget {
   const CustomAnimatedContainer({
     super.key,

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -23,11 +22,11 @@ class CustomFormError extends StatelessWidget {
       children: [
         SvgPicture.asset(
           'assets/icons/Error.svg',
-          height:14,
+          height: 14,
           width: 14,
         ),
         const SizedBox(
-          width:10,
+          width: 10,
         ),
         Text(error),
       ],

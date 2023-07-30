@@ -7,12 +7,21 @@ class AddTaskTextField extends StatelessWidget {
     required this.text,
     this.icon,
     this.validator,
+    this.onChanged,
+    this.onSaved,
+    this.controller,  this.autofocus = false, this.focusNode,
+  
   });
 
   final double height;
   final String text;
   final IconData? icon;
   final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
+  final void Function(String?)? onSaved;
+  final TextEditingController? controller;
+ final bool autofocus;
+ final FocusNode? focusNode;
   @override
   Widget build(BuildContext context) {
     return
@@ -27,6 +36,11 @@ class AddTaskTextField extends StatelessWidget {
         Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextFormField(
+        focusNode: focusNode,
+        autofocus: autofocus,
+        controller: controller,
+        onChanged: onChanged,
+        onSaved: onSaved,
         validator: validator,
         decoration: InputDecoration(
           filled: true,

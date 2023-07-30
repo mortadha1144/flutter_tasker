@@ -9,13 +9,15 @@ class ProfileViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: ElevatedButton(
-            onPressed: () async {
-              await SharedPrefs.instance.remove(SharedPrefs.kAccessToken);
-              await SharedPrefs.instance
-                  .remove(SharedPrefs.kUserData)
-                  .then((value) => context.go(AppRouter.kLogInView));
-            },
-            child: const Text('Logout')));
+      child: ElevatedButton(
+        onPressed: () async {
+          await SharedPrefs.instance.remove(SharedPrefs.kAccessToken);
+          await SharedPrefs.instance
+              .remove(SharedPrefs.kUserData)
+              .then((value) => context.go(AppRouter.kLogInView));
+        },
+        child: const Text('Logout'),
+      ),
+    );
   }
 }

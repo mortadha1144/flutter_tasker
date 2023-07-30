@@ -10,7 +10,7 @@ class DateAndTimeSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  const Row(
+    return const Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Expanded(
