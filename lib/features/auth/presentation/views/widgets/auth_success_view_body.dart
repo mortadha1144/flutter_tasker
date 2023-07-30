@@ -40,7 +40,6 @@ class AuthSuccessViewBody extends StatelessWidget {
               } else {
                 context.go(AppRouter.kLogInView);
               }
-
               // Router.neglect(context, () {
               //   context.go(AppRouter.kHomeView);
               // });

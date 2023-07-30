@@ -41,6 +41,7 @@ dependencies:
   go_router: ^10.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  intl: ^0.18.1
   json_annotation: ^4.8.1
   shared_preferences: ^2.2.0
 

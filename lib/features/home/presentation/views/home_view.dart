@@ -49,16 +49,7 @@ class HomeView extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                  onPressed: () async {
-                    Map<String, dynamic> user = {
-                      'Username': 'tom',
-                      'Password': 123
-                    };
-
-                    await SharedPrefs.instance
-                        .setString('user', jsonEncode(user))
-                        .then((value) => print(value));
-                  },
+                  onPressed: () {},
                   icon: const Icon(CupertinoIcons.calendar),
                 ),
                 IconButton(

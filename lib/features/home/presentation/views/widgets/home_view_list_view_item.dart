@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
+import 'package:intl/intl.dart';
 
-class HomeViewListViewItem extends StatelessWidget {
+class HomeViewListViewItem extends StatefulWidget {
   const HomeViewListViewItem({
     super.key,
+    required this.task,
   });
 
+  final TaskModel task;
+
+  @override
+  State<HomeViewListViewItem> createState() => _HomeViewListViewItemState();
+}
+
+class _HomeViewListViewItemState extends State<HomeViewListViewItem> {
+  bool isComplete = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,19 +45,19 @@ class HomeViewListViewItem extends StatelessWidget {
                 children: [
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text(
-                      'Learning Web Developer',
-                      style: TextStyle(
+                    title: Text(
+                      widget.task.title!,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
-                    subtitle: const Text(
-                      'Learning topic HTML and CSS',
-                      style: TextStyle(fontSize: 12),
+                    subtitle: Text(
+                      widget.task.description!,
+                      style: const TextStyle(fontSize: 12),
                     ),
                     trailing: Checkbox(
-                      value: true,
+                      value: widget.task.completed,
                       shape: const CircleBorder(),
                       onChanged: (value) {},
                     ),
@@ -62,7 +73,7 @@ class HomeViewListViewItem extends StatelessWidget {
                         Row(
                           children: [
                             const Text(
-                              'Today',
+                              'Due Date : ',
                               style: TextStyle(
                                 fontSize: 12,
                               ),
@@ -71,7 +82,7 @@ class HomeViewListViewItem extends StatelessWidget {
                               width: 12,
                             ),
                             Text(
-                              '09:15 PM - 11:45 PM',
+                              formatDate(),
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey.shade600,
@@ -90,4 +101,7 @@ class HomeViewListViewItem extends StatelessWidget {
       ),
     );
   }
+
+  String formatDate() =>
+      DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.task.dueDate!));
 }
