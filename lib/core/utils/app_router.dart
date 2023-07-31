@@ -5,7 +5,9 @@ import 'package:flutter_tasker/features/auth/presentation/views/complete_profile
 import 'package:flutter_tasker/features/auth/presentation/views/log_in_view.dart';
 import 'package:flutter_tasker/features/auth/presentation/views/sign_up_view.dart';
 import 'package:flutter_tasker/features/add_task/presentation/views/add_task_view.dart';
+import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
 import 'package:flutter_tasker/features/home/presentation/views/home_view.dart';
+import 'package:flutter_tasker/features/home/presentation/views/task_view.dart';
 import 'package:flutter_tasker/features/onboarding/presentation/views/onboarding.dart';
 import 'package:flutter_tasker/features/profile/presentation/views/profile_view.dart';
 import 'package:go_router/go_router.dart';
@@ -19,6 +21,7 @@ abstract class AppRouter {
   static const kAuthSuccessView = '/authSuccessView';
   static const kAddTaskView = '/addTaskView';
   static const kProfileView = '/profileView';
+  static const kTaskView = '/taskView';
 
   static final router = GoRouter(
     routes: [
@@ -66,6 +69,12 @@ abstract class AppRouter {
       GoRoute(
         path: kProfileView,
         builder: (context, state) => const ProfileView(),
+      ),
+      GoRoute(
+        path: kTaskView,
+        builder: (context, state) => TaskView(
+          task: state.extra as TaskModel,
+        ),
       ),
     ],
     redirect: (context, state) {

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -87,7 +88,9 @@ class AddTaskFormState extends ConsumerState<AddTaskForm> {
                 });
               }
             },
-            child:  AddImageButton(path: path,),
+            child: AddImageButton(
+              path: path,
+            ),
           ),
           const SizedBox(height: 20),
           CustomButton(
@@ -96,16 +99,23 @@ class AddTaskFormState extends ConsumerState<AddTaskForm> {
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-
+                String fileName = path ?? '/'.split('/').last;
                 Map<String, dynamic> taskMap = {
                   'title': taskTitle,
                   'description': taskDescription,
                   'dueDate': dueDate,
+                  'image': path != null
+                      ? await MultipartFile.fromFile(
+                          path!,
+                          filename: fileName,
+                        )
+                      : null,
                 };
                 await ref.read(addTaskProvider.notifier).addTask(taskMap).then(
                   (value) {
                     customSnackBar(context, 'Task Added Successfully');
                     _formKey.currentState!.reset();
+                    path = null;
                   },
                 );
               }
