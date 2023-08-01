@@ -3,6 +3,8 @@ import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
 import 'package:flutter_tasker/features/home/data/repos/home_repo.dart';
 import 'package:flutter_tasker/features/home/presentation/providers/home_state.dart';
 
+
+
 final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>((ref) {
   return HomeNotifier(HomeRepo());
 });
@@ -16,16 +18,11 @@ class HomeNotifier extends StateNotifier<HomeState> {
 
   List<TaskModel> tasks = [];
 
-  TaskModel getTask(int id) => state.whenOrNull(
-      loaded: (tasks) => tasks.firstWhere((element) => element.id == id))!;
+  TaskModel getTask(int id) => tasks.firstWhere((element) => element.id == id);
 
   updateTask(bool newValu, int id) {
-    state.mapOrNull(
-      loaded: (value) => value.tasks
-          .firstWhere((element) => element.id == id)
-          .copyWith(completed: newValu),
-    );
-   
+    tasks.firstWhere((element) => element.id == id).completed = newValu;
+    state = HomeState.loaded(tasks);
   }
 
   Future<void> fetchTasks() async {

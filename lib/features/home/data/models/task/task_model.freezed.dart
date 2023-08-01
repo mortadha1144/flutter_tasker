@@ -21,14 +21,23 @@ TaskModel _$TaskModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TaskModel {
   int? get id => throw _privateConstructorUsedError;
+  set id(int? value) => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
+  set createdAt(String? value) => throw _privateConstructorUsedError;
   String? get dueDate => throw _privateConstructorUsedError;
+  set dueDate(String? value) => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
+  set title(String? value) => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  set description(String? value) => throw _privateConstructorUsedError;
   bool? get completed => throw _privateConstructorUsedError;
+  set completed(bool? value) => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
+  set image(String? value) => throw _privateConstructorUsedError;
   @JsonKey(name: 'user')
   UserModel? get user => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user')
+  set user(UserModel? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -206,7 +215,7 @@ class __$$_TaskModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_TaskModel implements _TaskModel {
-  const _$_TaskModel(
+  _$_TaskModel(
       this.id,
       this.createdAt,
       this.dueDate,
@@ -220,50 +229,27 @@ class _$_TaskModel implements _TaskModel {
       _$$_TaskModelFromJson(json);
 
   @override
-  final int? id;
+  int? id;
   @override
-  final String? createdAt;
+  String? createdAt;
   @override
-  final String? dueDate;
+  String? dueDate;
   @override
-  final String? title;
+  String? title;
   @override
-  final String? description;
+  String? description;
   @override
-  final bool? completed;
+  bool? completed;
   @override
-  final String? image;
+  String? image;
   @override
   @JsonKey(name: 'user')
-  final UserModel? user;
+  UserModel? user;
 
   @override
   String toString() {
     return 'TaskModel(id: $id, createdAt: $createdAt, dueDate: $dueDate, title: $title, description: $description, completed: $completed, image: $image, user: $user)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_TaskModel &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.completed, completed) ||
-                other.completed == completed) &&
-            (identical(other.image, image) || other.image == image) &&
-            (identical(other.user, user) || other.user == user));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, createdAt, dueDate, title,
-      description, completed, image, user);
 
   @JsonKey(ignore: true)
   @override
@@ -280,36 +266,45 @@ class _$_TaskModel implements _TaskModel {
 }
 
 abstract class _TaskModel implements TaskModel {
-  const factory _TaskModel(
-      final int? id,
-      final String? createdAt,
-      final String? dueDate,
-      final String? title,
-      final String? description,
-      final bool? completed,
-      final String? image,
-      @JsonKey(name: 'user') final UserModel? user) = _$_TaskModel;
+  factory _TaskModel(
+      int? id,
+      String? createdAt,
+      String? dueDate,
+      String? title,
+      String? description,
+      bool? completed,
+      String? image,
+      @JsonKey(name: 'user') UserModel? user) = _$_TaskModel;
 
   factory _TaskModel.fromJson(Map<String, dynamic> json) =
       _$_TaskModel.fromJson;
 
   @override
   int? get id;
+  set id(int? value);
   @override
   String? get createdAt;
+  set createdAt(String? value);
   @override
   String? get dueDate;
+  set dueDate(String? value);
   @override
   String? get title;
+  set title(String? value);
   @override
   String? get description;
+  set description(String? value);
   @override
   bool? get completed;
+  set completed(bool? value);
   @override
   String? get image;
+  set image(String? value);
   @override
   @JsonKey(name: 'user')
   UserModel? get user;
+  @JsonKey(name: 'user')
+  set user(UserModel? value);
   @override
   @JsonKey(ignore: true)
   _$$_TaskModelCopyWith<_$_TaskModel> get copyWith =>

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../data/models/task/task_model.dart';
 import '../../providers/home_provider.dart';
+import '../../providers/view_edit_task_provider.dart';
 import 'task_view_header.dart';
 
 class TaskViewBody extends ConsumerWidget {
@@ -12,7 +13,7 @@ class TaskViewBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TaskModel task = ref.watch(homeProvider.notifier).getTask(taskId);
+    final TaskModel task = ref.watch(taskProvider(taskId));
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(

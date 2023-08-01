@@ -7,7 +7,7 @@ import 'widgets/task_view_body.dart';
 class TaskView extends StatelessWidget {
   const TaskView({super.key, required this.taskId});
 
-  final int  taskId;
+  final int taskId;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class TaskView extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              context.pushReplacement(
+              context.push(
                 AppRouter.kEditTaskView,
                 extra: taskId,
               );

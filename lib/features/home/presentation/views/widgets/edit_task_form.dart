@@ -6,6 +6,7 @@ import 'package:flutter_tasker/features/home/presentation/providers/home_provide
 import 'package:flutter_tasker/features/home/presentation/views/widgets/custom_text_field.dart';
 
 import '../../../../../core/utils/widgets/custom_button.dart';
+import '../../providers/view_edit_task_provider.dart';
 import 'add_image_button.dart';
 import 'custom_title_text.dart';
 
@@ -31,7 +32,7 @@ class EditTaskFormState extends ConsumerState<EditTaskForm> {
 
   @override
   Widget build(BuildContext context) {
-    TaskModel task = ref.watch(homeProvider.notifier).getTask(widget.taskId);
+    TaskModel task = ref.watch(taskProvider(widget.taskId));
 
     String isComplete = task.completed ?? false ? 'Completed' : 'Uncompleted';
     return Form(
@@ -80,7 +81,12 @@ class EditTaskFormState extends ConsumerState<EditTaskForm> {
               ],
               onChanged: (value) {
                 bool newValue = value == 'Completed' ? true : false;
-                task = task.copyWith(completed: newValue);
+
+                ref.read(taskProvider(widget.taskId)).completed = newValue;
+                ref
+                    .read(homeProvider.notifier)
+                    .updateTask(newValue, widget.taskId);
+
                 // setState(() {
                 //   task = task.copyWith(completed: newValue);
                 // });

@@ -62,7 +62,7 @@ class _HomeViewListViewItemState extends State<HomeViewListViewItem> {
                         style: const TextStyle(fontSize: 12),
                       ),
                       trailing: Checkbox(
-                        value: isComplete,
+                        value: widget.task.completed,
                         shape: const CircleBorder(),
                         onChanged: (value) {
                           setState(() {

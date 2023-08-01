@@ -1,4 +1,3 @@
-
 import '../../../../auth/data/models/user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -8,9 +7,9 @@ part 'task_model.freezed.dart';
 // But if Person was not serializable, we could skip it.
 part 'task_model.g.dart';
 
-@freezed
-class TaskModel with _$TaskModel{
-  const factory TaskModel(
+@unfreezed
+class TaskModel with _$TaskModel {
+   factory TaskModel(
     int? id,
     String? createdAt,
     String? dueDate,
@@ -18,9 +17,11 @@ class TaskModel with _$TaskModel{
     String? description,
     bool? completed,
     String? image,
-    @JsonKey(name: 'user')
-    UserModel? user,
+    @JsonKey(name: 'user') UserModel? user,
   ) = _TaskModel;
 
-  factory TaskModel.fromJson(Map<String, dynamic> json) => _$TaskModelFromJson(json);
+  factory TaskModel.fromJson(Map<String, dynamic> json) =>
+      _$TaskModelFromJson(json);
+
+  // set completed(bool value) => copyWith(completed: value);
 }
