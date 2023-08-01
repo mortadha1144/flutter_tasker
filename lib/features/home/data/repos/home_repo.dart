@@ -11,7 +11,9 @@ class HomeRepo {
   factory HomeRepo() => _instance;
 
   HomeRepo._internal(this._apiService);
+
   final ApiService _apiService;
+  
   String token = SharedPrefs.getAccessToken() ?? '';
   Future<Either<Failure, TaskModel>> addTask(Map<String, dynamic> task) async {
     FormData formData = FormData.fromMap(task);

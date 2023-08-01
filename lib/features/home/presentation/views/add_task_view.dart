@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tasker/core/utils/widgets/custom_button.dart';
-
 import 'widgets/add_task_view_body.dart';
 
 class AddTaskView extends StatelessWidget {

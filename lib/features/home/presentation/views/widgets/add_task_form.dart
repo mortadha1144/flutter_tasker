@@ -2,14 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_tasker/features/add_task/presentation/providers/add_task_provider.dart';
-import 'package:flutter_tasker/features/add_task/presentation/providers/add_task_state.dart';
+import 'package:flutter_tasker/features/home/presentation/providers/add_task_state.dart';
 
 import '../../../../../core/utils/functions/custom_snack_bar.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
+import '../../providers/add_task_provider.dart';
+import 'custom_title_text.dart';
 import 'add_image_button.dart';
-import 'add_task_text_field.dart';
-import 'add_task_view_body.dart';
+import 'custom_text_field.dart';
 
 class AddTaskForm extends ConsumerStatefulWidget {
   const AddTaskForm({
@@ -37,7 +37,7 @@ class AddTaskFormState extends ConsumerState<AddTaskForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const CustomTitleText(text: 'Task Title'),
-          AddTaskTextField(
+          CustomTextField(
             text: 'Add Task Title..',
             validator: (value) {
               if (value!.isEmpty) {
@@ -48,7 +48,7 @@ class AddTaskFormState extends ConsumerState<AddTaskForm> {
             onSaved: (newValue) => taskTitle = newValue,
           ),
           const CustomTitleText(text: 'Description'),
-          AddTaskTextField(
+          CustomTextField(
             text: 'Add Description',
             validator: (value) {
               if (value!.isEmpty) {
@@ -64,7 +64,7 @@ class AddTaskFormState extends ConsumerState<AddTaskForm> {
           ),
           SizedBox(
             width: 200,
-            child: AddTaskTextField(
+            child: CustomTextField(
               text: 'yyyy/mm/dd',
               icon: Icons.calendar_month,
               validator: (value) {
@@ -95,7 +95,7 @@ class AddTaskFormState extends ConsumerState<AddTaskForm> {
           const SizedBox(height: 20),
           CustomButton(
             text: 'Add Task',
-            isLoading: state.isLoading,
+           isLoading: state.isLoading,
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();

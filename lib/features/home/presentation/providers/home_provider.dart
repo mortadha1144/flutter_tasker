@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
 import 'package:flutter_tasker/features/home/data/repos/home_repo.dart';
 import 'package:flutter_tasker/features/home/presentation/providers/home_state.dart';
 
@@ -13,12 +14,29 @@ class HomeNotifier extends StateNotifier<HomeState> {
 
   final HomeRepo _homeRepo;
 
+  List<TaskModel> tasks = [];
+
+  TaskModel getTask(int id) => state.whenOrNull(
+      loaded: (tasks) => tasks.firstWhere((element) => element.id == id))!;
+
+  updateTask(bool newValu, int id) {
+    state.mapOrNull(
+      loaded: (value) => value.tasks
+          .firstWhere((element) => element.id == id)
+          .copyWith(completed: newValu),
+    );
+   
+  }
+
   Future<void> fetchTasks() async {
     state = const HomeState.loading();
     var result = await _homeRepo.fetchTasks();
     result.fold(
       (faile) => state = HomeState.error(faile.errMessagel),
-      (success) => state = HomeState.loaded(success),
+      (success) {
+        tasks.addAll(success);
+        state = HomeState.loaded(success);
+      },
     );
   }
 }

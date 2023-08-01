@@ -4,8 +4,8 @@ import 'package:flutter_tasker/features/auth/presentation/views/auth_success_vie
 import 'package:flutter_tasker/features/auth/presentation/views/complete_profile_view.dart';
 import 'package:flutter_tasker/features/auth/presentation/views/log_in_view.dart';
 import 'package:flutter_tasker/features/auth/presentation/views/sign_up_view.dart';
-import 'package:flutter_tasker/features/add_task/presentation/views/add_task_view.dart';
-import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
+import 'package:flutter_tasker/features/home/presentation/views/add_task_view.dart';
+import 'package:flutter_tasker/features/home/presentation/views/edit_task.dart';
 import 'package:flutter_tasker/features/home/presentation/views/home_view.dart';
 import 'package:flutter_tasker/features/home/presentation/views/task_view.dart';
 import 'package:flutter_tasker/features/onboarding/presentation/views/onboarding.dart';
@@ -22,6 +22,7 @@ abstract class AppRouter {
   static const kAddTaskView = '/addTaskView';
   static const kProfileView = '/profileView';
   static const kTaskView = '/taskView';
+  static const kEditTaskView = '/editTaskView';
 
   static final router = GoRouter(
     routes: [
@@ -73,8 +74,12 @@ abstract class AppRouter {
       GoRoute(
         path: kTaskView,
         builder: (context, state) => TaskView(
-          task: state.extra as TaskModel,
+          taskId: state.extra as int,
         ),
+      ),
+      GoRoute(
+        path: kEditTaskView,
+        builder: (context, state) =>  EditTaskView(taskId: state.extra as int,),
       ),
     ],
     redirect: (context, state) {

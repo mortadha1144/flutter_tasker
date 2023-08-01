@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../data/models/task/task_model.dart';
+import '../../providers/home_provider.dart';
 import 'task_view_header.dart';
 
-class TaskViewBody extends StatelessWidget {
-  const TaskViewBody({super.key, required this.task});
+class TaskViewBody extends ConsumerWidget {
+  const TaskViewBody({super.key, required this.taskId});
 
-  final TaskModel task;
+  final int taskId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final TaskModel task = ref.watch(homeProvider.notifier).getTask(taskId);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 50),
-          TaskViewHeader(task: task),
+          TaskViewHeader(taskId: taskId),
           Text(
             task.description!,
           ),

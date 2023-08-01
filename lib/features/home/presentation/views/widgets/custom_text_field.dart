@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AddTaskTextField extends StatelessWidget {
-  const AddTaskTextField({
+class CustomTextField extends StatelessWidget {
+  const CustomTextField({
     super.key,
     this.height = 44,
     required this.text,
@@ -9,8 +9,9 @@ class AddTaskTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onSaved,
-    this.controller,  this.autofocus = false, this.focusNode,
-  
+    this.controller,
+    this.autofocus = false,
+    this.focusNode, this.initialValue,
   });
 
   final double height;
@@ -20,8 +21,9 @@ class AddTaskTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final void Function(String?)? onSaved;
   final TextEditingController? controller;
- final bool autofocus;
- final FocusNode? focusNode;
+  final bool autofocus;
+  final FocusNode? focusNode;
+ final String? initialValue;
   @override
   Widget build(BuildContext context) {
     return
@@ -36,6 +38,7 @@ class AddTaskTextField extends StatelessWidget {
         Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextFormField(
+        initialValue: initialValue,
         focusNode: focusNode,
         autofocus: autofocus,
         controller: controller,

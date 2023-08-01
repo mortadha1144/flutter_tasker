@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
+import 'package:flutter_tasker/core/utils/app_router.dart';
+import 'package:go_router/go_router.dart';
 
 import 'widgets/task_view_body.dart';
 
 class TaskView extends StatelessWidget {
-  const TaskView({super.key, required this.task});
+  const TaskView({super.key, required this.taskId});
 
-  final TaskModel task;
+  final int  taskId;
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +15,19 @@ class TaskView extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.pushReplacement(
+                AppRouter.kEditTaskView,
+                extra: taskId,
+              );
+            },
             icon: const Icon(Icons.edit_note),
           ),
         ],
       ),
-      body:  TaskViewBody(task: task,),
+      body: TaskViewBody(
+        taskId: taskId,
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'add_task_text_field.dart';
-import 'add_task_view_body.dart';
+import 'custom_title_text.dart';
+import 'custom_text_field.dart';
 
 class DateAndTimeSection extends StatelessWidget {
   const DateAndTimeSection({
@@ -18,7 +18,7 @@ class DateAndTimeSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomTitleText(text: 'Date'),
-              AddTaskTextField(
+              CustomTextField(
                 text: 'dd/mm/yy',
                 icon: Icons.calendar_month,
               )
@@ -31,7 +31,7 @@ class DateAndTimeSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomTitleText(text: 'Date'),
-              AddTaskTextField(
+              CustomTextField(
                 text: 'hh : mm',
                 icon: Icons.watch_later_outlined,
               )

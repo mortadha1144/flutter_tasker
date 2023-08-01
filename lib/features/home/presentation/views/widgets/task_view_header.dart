@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tasker/core/utils/functions/format_date.dart';
 import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
+import 'package:flutter_tasker/features/home/presentation/providers/home_provider.dart';
 
-class TaskViewHeader extends StatelessWidget {
+class TaskViewHeader extends ConsumerWidget {
   const TaskViewHeader({
     super.key,
-    required this.task,
+    required this.taskId,
   });
 
-  final TaskModel task;
+  final int taskId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final TaskModel task = ref.watch(homeProvider.notifier).getTask(taskId);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
