@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tasker/features/home/presentation/providers/home_provider.dart';
 
 import '../../../home/data/repos/home_repo.dart';
-import 'add_task_state.dart';
+import 'states/add_task_state.dart';
 
 final addTaskProvider =
     StateNotifierProvider<AddTaskNotifier, AddTaskState>((ref) {

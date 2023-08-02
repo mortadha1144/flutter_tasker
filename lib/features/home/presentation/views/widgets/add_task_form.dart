@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_tasker/features/home/presentation/providers/add_task_state.dart';
+import 'package:flutter_tasker/features/home/presentation/providers/states/add_task_state.dart';
 
 import '../../../../../core/utils/functions/custom_snack_bar.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../data/models/task/task_model.dart';
+import '../../../data/models/task/task_model.dart';
 
 part 'home_state.freezed.dart';
 

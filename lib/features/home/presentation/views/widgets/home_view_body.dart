@@ -30,6 +30,7 @@ class HomeViewBody extends ConsumerWidget {
                 itemBuilder: (context, index) => HomeViewListViewItem(
                   task: tasks[index],
                   onTap: () {
+                    ref.read(homeProvider.notifier).getTask(tasks[index].id!);
                     context.push(AppRouter.kTaskView, extra: tasks[index].id);
                   },
                 ),

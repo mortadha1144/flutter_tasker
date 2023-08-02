@@ -13,7 +13,7 @@ class HomeRepo {
   HomeRepo._internal(this._apiService);
 
   final ApiService _apiService;
-  
+
   String token = SharedPrefs.getAccessToken() ?? '';
   Future<Either<Failure, TaskModel>> addTask(Map<String, dynamic> task) async {
     FormData formData = FormData.fromMap(task);
@@ -53,6 +53,26 @@ class HomeRepo {
 
       return right(tasks.reversed.toList());
     } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioExeotion(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  updateTask(Map<String, dynamic> task) {}
+
+  Future<Either<Failure, TaskModel>> getTask(int id) async {
+    try {
+      var data = await _apiService.get(
+        endPoin: 'Tasks/$id',
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+      return right(TaskModel.fromJson(data));
+    } catch (e) {
+     
       if (e is DioException) {
         return left(ServerFailure.fromDioExeotion(e));
       }

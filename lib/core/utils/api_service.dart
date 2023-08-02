@@ -11,8 +11,8 @@ class ApiService {
 
   ApiService._internal(this._dio);
 
-  Future<List<dynamic>> get({required String endPoin, Options? options}) async {
-    var response = await _dio.get('$_baseUrl$endPoin',options: options);
+   Future<dynamic> get({required String endPoin, Options? options}) async {
+    Response response = await _dio.get('$_baseUrl$endPoin',options: options);
     return response.data;
   }
 

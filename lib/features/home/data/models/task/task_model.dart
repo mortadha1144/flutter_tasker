@@ -7,9 +7,9 @@ part 'task_model.freezed.dart';
 // But if Person was not serializable, we could skip it.
 part 'task_model.g.dart';
 
-@unfreezed
+@freezed
 class TaskModel with _$TaskModel {
-   factory TaskModel(
+  const factory TaskModel(
     int? id,
     String? createdAt,
     String? dueDate,
