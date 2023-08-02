@@ -11,8 +11,8 @@ class ApiService {
 
   ApiService._internal(this._dio);
 
-   Future<dynamic> get({required String endPoin, Options? options}) async {
-    Response response = await _dio.get('$_baseUrl$endPoin',options: options);
+  Future<dynamic> get({required String endPoin, Options? options}) async {
+    Response response = await _dio.get('$_baseUrl$endPoin', options: options);
     return response.data;
   }
 
@@ -21,5 +21,10 @@ class ApiService {
     var response =
         await _dio.post('$_baseUrl$endPoin', data: data, options: options);
     return response.data;
+  }
+
+  Future<void> put(
+      {required String endPoint, Object? data, Options? options,Map<String, dynamic>? queryParameters}) async {
+    await _dio.put('$_baseUrl$endPoint',queryParameters: queryParameters, data: data, options: options);
   }
 }

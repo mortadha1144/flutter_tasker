@@ -60,7 +60,26 @@ class HomeRepo {
     }
   }
 
-  updateTask(Map<String, dynamic> task) {}
+  Future<Either<Failure, void>> updateTask({required TaskModel task}) async {
+    var formData = FormData.fromMap(task.toJson()..remove('image'));
+    try {
+      await _apiService.put(
+          endPoint: 'Tasks/${task.id}',
+          data: formData,
+          options: Options(
+            headers: {'Authorization': 'Bearer $token'},
+            contentType: Headers.multipartFormDataContentType,
+          ));
+
+      return right(null);
+    } catch (e) {
+      print(e.toString());
+      if (e is DioException) {
+        return left(ServerFailure.fromDioExeotion(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
 
   Future<Either<Failure, TaskModel>> getTask(int id) async {
     try {
@@ -72,7 +91,6 @@ class HomeRepo {
       );
       return right(TaskModel.fromJson(data));
     } catch (e) {
-     
       if (e is DioException) {
         return left(ServerFailure.fromDioExeotion(e));
       }

@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tasker/core/utils/widgets/custom_loading_indicator.dart';
+import 'package:flutter_tasker/features/home/data/repos/home_repo.dart';
 import 'package:flutter_tasker/features/home/presentation/providers/view_task_provider.dart';
 import 'package:flutter_tasker/features/home/presentation/views/widgets/custom_text_field.dart';
 
@@ -78,6 +79,7 @@ class EditTaskFormState extends ConsumerState<EditTaskForm> {
                 ],
                 onChanged: (value) {
                   bool newValue = value == 'Completed' ? true : false;
+                  task = task.copyWith(completed: newValue);
                 },
               ),
             ),
@@ -139,6 +141,12 @@ class EditTaskFormState extends ConsumerState<EditTaskForm> {
                       )
                     }.entries);
                   }
+
+                  HomeRepo().updateTask(task: task);
+
+                  // ref
+                  //     .read(viewTaskProvider(widget.taskId).notifier)
+                  //     .updatTask(task);
                 }
               },
             ),
