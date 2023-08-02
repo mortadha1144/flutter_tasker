@@ -61,7 +61,7 @@ class HomeRepo {
   }
 
   Future<Either<Failure, void>> updateTask({required TaskModel task}) async {
-    var formData = FormData.fromMap(task.toJson()..remove('image'));
+    var formData = FormData.fromMap(task.toJson());
     try {
       await _apiService.put(
           endPoint: 'Tasks/${task.id}',
