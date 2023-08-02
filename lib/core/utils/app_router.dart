@@ -4,6 +4,7 @@ import 'package:flutter_tasker/features/auth/presentation/views/auth_success_vie
 import 'package:flutter_tasker/features/auth/presentation/views/complete_profile_view.dart';
 import 'package:flutter_tasker/features/auth/presentation/views/log_in_view.dart';
 import 'package:flutter_tasker/features/auth/presentation/views/sign_up_view.dart';
+import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
 import 'package:flutter_tasker/features/home/presentation/views/add_task_view.dart';
 import 'package:flutter_tasker/features/home/presentation/views/edit_task.dart';
 import 'package:flutter_tasker/features/home/presentation/views/home_view.dart';
@@ -79,7 +80,8 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kEditTaskView,
-        builder: (context, state) =>  EditTaskView(taskId: state.extra as int,),
+        builder: (context, state) =>
+            EditTaskView(task: state.extra as TaskModel),
       ),
     ],
     redirect: (context, state) {

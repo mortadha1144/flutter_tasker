@@ -21,6 +21,7 @@ class _HomeViewListViewItemState extends State<HomeViewListViewItem> {
   bool isComplete = false;
   @override
   Widget build(BuildContext context) {
+    // final File file = File(widget.task.image);
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(

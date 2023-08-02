@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tasker/features/home/presentation/views/widgets/edit_task_view_body.dart';
 
-class EditTaskView extends StatelessWidget {
-  const EditTaskView({super.key, required this.taskId});
+import '../../data/models/task/task_model.dart';
 
-  final int taskId;
+class EditTaskView extends StatelessWidget {
+  const EditTaskView({super.key, required this.task});
+
+  final TaskModel task;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class EditTaskView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Edit Task Data'),
       ),
-      body: EditTaskViewBody(taskId: taskId),
+      body: EditTaskViewBody(task: task),
     );
   }
 }
