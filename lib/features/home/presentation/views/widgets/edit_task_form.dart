@@ -1,13 +1,16 @@
-import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
-import 'package:flutter_tasker/features/home/data/repos/home_repo.dart';
+import 'package:flutter_tasker/features/home/presentation/providers/states/edit_task_state.dart';
+import 'package:flutter_tasker/features/home/presentation/providers/view_task_provider.dart';
 import 'package:flutter_tasker/features/home/presentation/views/widgets/custom_text_field.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
 import 'add_image_button.dart';
 import 'custom_title_text.dart';
 import 'image_viewer.dart';
+import 'task_completed_section.dart';
+import 'task_edit_due_date_setion.dart';
 
 class EditTaskForm extends StatefulWidget {
   const EditTaskForm({
@@ -66,45 +69,22 @@ class _EditTaskFormState extends State<EditTaskForm> {
             },
             onSaved: (newValue) => task = task.copyWith(description: newValue),
           ),
-          const CustomTitleText(text: 'Task is'),
-          SizedBox(
-            width: 200,
-            child: DropdownButtonFormField(
-              value: task.completed ?? false ? 'Completed' : 'Uncompleted',
-              items: const [
-                DropdownMenuItem(
-                  value: 'Completed',
-                  child: Text('Completed'),
-                ),
-                DropdownMenuItem(
-                  value: 'Uncompleted',
-                  child: Text('Uncompleted'),
-                ),
-              ],
-              onChanged: (value) {
-                bool newValue = value == 'Completed' ? true : false;
-                task = task.copyWith(completed: newValue);
-              },
-            ),
-          ),
           const SizedBox(height: 10),
-          const CustomTitleText(
-            text: 'Due Date',
-          ),
-          SizedBox(
-            width: 200,
-            child: CustomTextField(
-              initialValue: task.dueDate,
-              text: 'yyyy/mm/dd',
-              icon: Icons.calendar_month,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Due Date is Required';
-                }
-                return null;
-              },
-              onSaved: (newValue) => task = task.copyWith(dueDate: newValue),
-            ),
+          Row(
+            children: [
+              TaskCompletedSection(
+                isCompleted: task.completed ?? false,
+                onChanged: (value) {
+                  bool newValue = value == 'Completed' ? true : false;
+                  task = task.copyWith(completed: newValue);
+                },
+              ),
+              const SizedBox(width: 10),
+              TaskDueDateSection(
+                dueDate: task.dueDate!,
+                onSaved: (newValue) => task = task.copyWith(dueDate: newValue),
+              )
+            ],
           ),
           const SizedBox(height: 10),
           const CustomTitleText(text: 'Task Image'),
@@ -117,7 +97,8 @@ class _EditTaskFormState extends State<EditTaskForm> {
                     });
                   },
                 )
-              : InkWell(
+              : 
+              InkWell(
                   onTap: () async {
                     final result = await FilePicker.platform
                         .pickFiles(type: FileType.image);
@@ -129,36 +110,30 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   },
                   child: AddImageButton(
                     path: path,
+                    onPressed: () {
+                      setState(() {
+                        path = null;
+                      });
+                    },
                   ),
                 ),
           const SizedBox(height: 20),
-          CustomButton(
-            text: 'Save',
-            //isLoading: state.isLoading,
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                String fileName = path ?? '/'.split('/').last;
-                Map<String, dynamic> taskMap = {
-                  'title': task.title,
-                  'description': task.description,
-                  'dueDate': task.dueDate,
-                };
-                if (path != null) {
-                  taskMap.addEntries({
-                    'image': await MultipartFile.fromFile(
-                      path!,
-                      filename: fileName,
-                    )
-                  }.entries);
-                }
+          Consumer(
+            builder: (context, ref, child) {
+              final state = ref.watch(viewTaskProvider(widget.task.id!));
+              return CustomButton(
+                text: 'Save',
+                isLoading: state.isLoading,
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
 
-                HomeRepo().updateTask(task: task);
-
-                // ref
-                //     .read(viewTaskProvider(widget.taskId).notifier)
-                //     .updatTask(task);
-              }
+                    await ref
+                        .read(viewTaskProvider(widget.task.id!).notifier)
+                        .updatTask(task, path);
+                  }
+                },
+              );
             },
           ),
         ],
@@ -166,5 +141,3 @@ class _EditTaskFormState extends State<EditTaskForm> {
     );
   }
 }
-
-

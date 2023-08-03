@@ -92,7 +92,9 @@ class _HomeViewListViewItemState extends State<HomeViewListViewItem> {
                                 width: 12,
                               ),
                               Text(
-                                formatDate(date: widget.task.dueDate!),
+                                formatDate(
+                                    date: widget.task.dueDate ??
+                                        '2023-09-01T00:00:00'),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey.shade600,

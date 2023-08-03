@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 
 class AddImageButton extends StatelessWidget {
   const AddImageButton({
-    super.key, this.path,
+    super.key,
+    this.path,
+    required this.onPressed,
   });
 
-  
-
- final String? path;
+  final String? path;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +36,38 @@ class AddImageButton extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
               borderRadius: BorderRadius.circular(12),
-              image: DecorationImage(
-                image: FileImage(
+              // image: DecorationImage(
+              //   image: FileImage(
+              //     File(path!),
+              //   ),
+              //   fit: BoxFit.fill,
+              // ),
+            ),
+            child: Stack(
+              children: [
+                Positioned.fill(
+                    child: Image.file(
                   File(path!),
-                ),
-                fit: BoxFit.fill,
-              ),
+                  fit: BoxFit.fill,
+                )),
+                Positioned(
+                  right: -2,
+                  top: -2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: IconButton(
+                      onPressed: onPressed,
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Colors.black,
+                        size: 32,
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
           );
   }

@@ -90,12 +90,13 @@ class AddTaskFormState extends ConsumerState<AddTaskForm> {
             },
             child: AddImageButton(
               path: path,
+              onPressed: () {},
             ),
           ),
           const SizedBox(height: 20),
           CustomButton(
             text: 'Add Task',
-           isLoading: state.isLoading,
+            isLoading: state.isLoading,
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();

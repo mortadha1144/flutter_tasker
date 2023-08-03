@@ -6,9 +6,10 @@ import 'states/edit_task_state.dart';
 
 final viewTaskProvider =
     StateNotifierProvider.family<ViewTaskNotifier, EditTaskState, int>(
-        (ref, id) {
-  return ViewTaskNotifier(HomeRepo(), id);
-});
+  (ref, id) {
+    return ViewTaskNotifier(HomeRepo(), id);
+  },
+);
 
 class ViewTaskNotifier extends StateNotifier<EditTaskState> {
   ViewTaskNotifier(this.homeRepo, id) : super(const EditTaskState.initial()) {
@@ -29,20 +30,13 @@ class ViewTaskNotifier extends StateNotifier<EditTaskState> {
     );
   }
 
-  updatTask(TaskModel taskModel) async {
-    Map<String, dynamic> taskMap = {
-      'id': taskModel.id,
-      'title': taskModel.title,
-      'description': taskModel.description,
-      'completed': taskModel.completed,
-      'dueDate': taskModel.dueDate,
-    };
-
-    var result = await homeRepo.updateTask(task: taskModel);
+  Future<void> updatTask(TaskModel task, String? path) async {
+    state = const EditTaskState.loading();
+    var result = await homeRepo.updateTask(task: task, path: path);
 
     result.fold(
       (fail) => state = EditTaskState.error(fail.errMessagel),
-      (success) => state =  EditTaskState.loaded(taskModel),
+      (success) => getTask(task.id!),
     );
   }
 }

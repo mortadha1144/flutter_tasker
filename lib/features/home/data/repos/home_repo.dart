@@ -60,8 +60,23 @@ class HomeRepo {
     }
   }
 
-  Future<Either<Failure, void>> updateTask({required TaskModel task}) async {
-    var formData = FormData.fromMap(task.toJson());
+  Future<Either<Failure, void>> updateTask(
+      {required TaskModel task,String? path}) async {
+        
+    Map<String, dynamic> taskMap = task.toJson();
+
+    if (path != null) {
+      String fileName = path.split('/').last;
+      MultipartFile multiPartFile = await MultipartFile.fromFile(
+                      path,
+                      filename: fileName,
+                    );
+      taskMap.update(
+        'image',
+        (value)  =>  multiPartFile,
+      );
+    } 
+    FormData formData = FormData.fromMap(taskMap);
     try {
       await _apiService.put(
           endPoint: 'Tasks/${task.id}',
