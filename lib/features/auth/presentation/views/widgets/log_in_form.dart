@@ -54,9 +54,8 @@ class LogInFormState extends ConsumerState<LogInForm> {
                 FocusManager.instance.primaryFocus?.unfocus();
                 await ref.watch(authProvider.notifier).login(name!, password!);
                 ref.watch(authProvider).whenOrNull(
-                      loaded: (authModel) => context.pushReplacement(
-                          AppRouter.kAuthSuccessView,
-                          extra: 'Login'),
+                      loaded: (authModel) => context
+                          .push(AppRouter.kAuthSuccessView, extra: 'Login'),
                       error: (error) {
                         addError(error: error);
                       },

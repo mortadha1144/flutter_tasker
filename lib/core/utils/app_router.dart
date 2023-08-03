@@ -49,21 +49,17 @@ abstract class AppRouter {
         builder: (context, state) => const SignUpView(),
       ),
       GoRoute(
-        path: kCompleteProfileView,
-        builder: (context, state) => CompleteProfileView(
-          email: state.extra as String,
-        ),
-      ),
-      GoRoute(
         path: kAuthSuccessView,
         builder: (context, state) => AuthSuccessView(
           text: state.extra as String,
         ),
       ),
-      // GoRoute(
-      //   path: kHomeView,
-      //   builder: (context, state) => const HomeView(),
-      // ),
+      GoRoute(
+        path: kCompleteProfileView,
+        builder: (context, state) => CompleteProfileView(
+          email: state.extra as String,
+        ),
+      ),
       GoRoute(
         path: kAddTaskView,
         builder: (context, state) => const AddTaskView(),
@@ -85,12 +81,14 @@ abstract class AppRouter {
       ),
     ],
     redirect: (context, state) {
+      bool isGoToRegister = state.matchedLocation == kSignUpView;
+      bool isGoToRegisterSuccess = state.matchedLocation == kAuthSuccessView;
       final bool isOnBoardingShown =
           SharedPrefs.getBool(kshowOnBoarding) ?? false;
       final bool isUserLoggedIn = checkUserAuth();
       if (!isOnBoardingShown) {
         return kOnBoardingView;
-      } else if (!isUserLoggedIn) {
+      } else if (!isUserLoggedIn && !isGoToRegister && !isGoToRegisterSuccess) {
         return kLogInView;
       }
       return null;

@@ -33,13 +33,16 @@ class TaskViewHeader extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
+                  color: task.completed!
+                      ? Colors.green.shade200
+                      : Colors.red.shade200,
                   border: Border.all(
                     color: task.completed! ? Colors.green : Colors.red,
                   ),
                 ),
                 child: Text(
                   task.completed! ? 'completed' : 'uncompleted',
-                  style: const TextStyle(color: Colors.black54),
+                  style: const TextStyle(color: Colors.black),
                 ),
               )
             ],

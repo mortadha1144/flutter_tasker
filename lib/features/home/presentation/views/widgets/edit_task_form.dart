@@ -1,14 +1,15 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tasker/core/utils/functions/custom_snack_bar.dart';
 import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
 import 'package:flutter_tasker/features/home/presentation/providers/states/edit_task_state.dart';
 import 'package:flutter_tasker/features/home/presentation/providers/view_task_provider.dart';
 import 'package:flutter_tasker/features/home/presentation/views/widgets/custom_text_field.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
 import 'add_image_button.dart';
 import 'custom_title_text.dart';
-import 'image_viewer.dart';
 import 'task_completed_section.dart';
 import 'task_edit_due_date_setion.dart';
 
@@ -88,35 +89,35 @@ class _EditTaskFormState extends State<EditTaskForm> {
           ),
           const SizedBox(height: 10),
           const CustomTitleText(text: 'Task Image'),
-          task.image != ''
-              ? ImageViewer(
-                  imageUrl: task.image!,
-                  onPressed: () {
-                    setState(() {
-                      task = task.copyWith(image: '');
-                    });
-                  },
-                )
-              : 
-              InkWell(
-                  onTap: () async {
-                    final result = await FilePicker.platform
-                        .pickFiles(type: FileType.image);
-                    if (result != null) {
-                      setState(() {
-                        path = result.files.single.path;
-                      });
-                    }
-                  },
-                  child: AddImageButton(
-                    path: path,
-                    onPressed: () {
-                      setState(() {
-                        path = null;
-                      });
-                    },
-                  ),
-                ),
+          // task.image != ''
+          //     ? ImageViewer(
+          //         imageUrl: task.image!,
+          //         onPressed: () {
+          //           setState(() {
+          //             task = task.copyWith(image: '');
+          //           });
+          //         },
+          //       )
+          //     :
+          InkWell(
+            onTap: () async {
+              final result =
+                  await FilePicker.platform.pickFiles(type: FileType.image);
+              if (result != null) {
+                setState(() {
+                  path = result.files.single.path;
+                });
+              }
+            },
+            child: AddImageButton(
+              path: path,
+              onPressed: () {
+                setState(() {
+                  path = null;
+                });
+              },
+            ),
+          ),
           const SizedBox(height: 20),
           Consumer(
             builder: (context, ref, child) {
@@ -130,7 +131,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
 
                     await ref
                         .read(viewTaskProvider(widget.task.id!).notifier)
-                        .updatTask(task, path);
+                        .updatTask(task, path)
+                        .then((value) {
+                      context.pop();
+                      customSnackBar(context, 'Task Updated Successfully');
+                    });
                   }
                 },
               );

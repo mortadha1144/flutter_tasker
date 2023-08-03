@@ -37,7 +37,9 @@ class _HomeViewListViewItemState extends State<HomeViewListViewItem> {
             Container(
               width: 12,
               decoration: BoxDecoration(
-                  color: Colors.green.shade200,
+                  color: widget.task.completed ?? false
+                      ? Colors.green.shade200
+                      : Colors.red.shade400,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8),
                       bottomLeft: Radius.circular(8))),

@@ -59,10 +59,10 @@ class SignUpFormState extends ConsumerState<SignUpForm> {
                 );
 
                 ref
-                    .watch(registerProvider.notifier)
+                    .read(registerProvider.notifier)
                     .register(registerModel)
                     .then((value) {
-                  state.whenOrNull(
+                  ref.watch(registerProvider).whenOrNull(
                     loaded: (userModel) {
                       context.pushReplacement(AppRouter.kAuthSuccessView,
                           extra: 'Register');
