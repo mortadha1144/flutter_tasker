@@ -24,7 +24,7 @@ class TaskViewHeader extends ConsumerWidget {
               Text(
                 task.title!,
                 style: const TextStyle(
-                  fontSize: 24,
+                  fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -48,7 +48,7 @@ class TaskViewHeader extends ConsumerWidget {
             ],
           ),
           const Spacer(),
-          Text(formatDate(date: task.dueDate!))
+          Text(formatDate(date: task.dueDate!)),
         ],
       ),
       orElse: () => const SizedBox.shrink(),

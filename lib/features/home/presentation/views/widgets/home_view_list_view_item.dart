@@ -3,31 +3,27 @@ import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
 
 import '../../../../../core/utils/functions/format_date.dart';
 
-class HomeViewListViewItem extends StatefulWidget {
+class HomeViewListViewItem extends StatelessWidget {
   const HomeViewListViewItem({
     super.key,
     required this.task,
     required this.onTap,
+    this.onTapCheckBox,
   });
 
   final TaskModel task;
   final VoidCallback onTap;
+  final void Function(bool?)? onTapCheckBox;
 
-  @override
-  State<HomeViewListViewItem> createState() => _HomeViewListViewItemState();
-}
-
-class _HomeViewListViewItemState extends State<HomeViewListViewItem> {
-  bool isComplete = false;
   @override
   Widget build(BuildContext context) {
     // final File file = File(widget.task.image);
     return GestureDetector(
-      onTap: widget.onTap,
+      onTap: onTap,
       child: Container(
         width: double.infinity,
         height: 120,
-        margin: const EdgeInsets.only(bottom: 12),
+        //margin: const EdgeInsets.only(bottom: 12),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
@@ -37,7 +33,7 @@ class _HomeViewListViewItemState extends State<HomeViewListViewItem> {
             Container(
               width: 12,
               decoration: BoxDecoration(
-                  color: widget.task.completed ?? false
+                  color: task.completed ?? false
                       ? Colors.green.shade200
                       : Colors.red.shade400,
                   borderRadius: const BorderRadius.only(
@@ -54,24 +50,20 @@ class _HomeViewListViewItemState extends State<HomeViewListViewItem> {
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        widget.task.title!,
+                        task.title!,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                       ),
                       subtitle: Text(
-                        widget.task.description!,
+                        task.description!,
                         style: const TextStyle(fontSize: 12),
                       ),
                       trailing: Checkbox(
-                        value: widget.task.completed,
+                        value: task.completed,
                         shape: const CircleBorder(),
-                        onChanged: (value) {
-                          setState(() {
-                            isComplete = value!;
-                          });
-                        },
+                        onChanged: onTapCheckBox,
                       ),
                     ),
                     Transform.translate(
@@ -95,8 +87,8 @@ class _HomeViewListViewItemState extends State<HomeViewListViewItem> {
                               ),
                               Text(
                                 formatDate(
-                                    date: widget.task.dueDate ??
-                                        '2023-09-01T00:00:00'),
+                                    date:
+                                        task.dueDate ?? '2023-09-01T00:00:00'),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey.shade600,

@@ -21,11 +21,22 @@ class HomeNotifier extends StateNotifier<HomeState> {
 
   TaskModel getTask(int id) => tasks.firstWhere((element) => element.id == id);
 
-  updateTask(bool newValu, int id) {
-   
-    task = task!.copyWith(completed: newValu);
-    
-    
+  updateTask(TaskModel task) {
+    final int index = tasks.indexWhere((element) => element.id == task.id);
+    tasks[index] = task;
+    state = HomeState.loaded(tasks);
+  }
+
+  Future<void> updateIsCompleted(int index, bool newValue) async {
+    TaskModel newTask = tasks[index].copyWith(completed: newValue);
+    var result = await _homeRepo.updateIsCompleted(newTask);
+    result.fold(
+      (fail) => null,
+      (success) {
+        tasks[index] = newTask;
+        state = HomeState.loaded(tasks);
+      },
+    );
   }
 
   Future<void> fetchTasks() async {

@@ -8,7 +8,7 @@ import 'package:flutter_tasker/features/home/data/models/task/task_model.dart';
 import 'package:flutter_tasker/features/home/presentation/views/add_task_view.dart';
 import 'package:flutter_tasker/features/home/presentation/views/edit_task.dart';
 import 'package:flutter_tasker/features/home/presentation/views/home_view.dart';
-import 'package:flutter_tasker/features/home/presentation/views/task_view.dart';
+import 'package:flutter_tasker/features/home/presentation/views/view_task.dart';
 import 'package:flutter_tasker/features/onboarding/presentation/views/onboarding.dart';
 import 'package:flutter_tasker/features/profile/presentation/views/profile_view.dart';
 import 'package:go_router/go_router.dart';

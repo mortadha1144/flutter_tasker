@@ -22,18 +22,29 @@ class TaskViewBody extends ConsumerWidget {
             TaskViewHeader(taskId: taskId),
             Text(
               task.description!,
+              style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 30),
             if (task.image != '')
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    border: Border.all(color: Colors.black54),
+                    borderRadius: BorderRadius.circular(8)),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                 height: 240,
-                child: Image.network(
-                  'http://5.189.132.217${task.image}',
-                  fit: BoxFit.fill,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Image.asset('assets/images/place_holder.png');
-                  },
+                padding: const EdgeInsets.all(4),
+                width: double.infinity,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    'http://5.189.132.217${task.image}',
+                    fit: BoxFit.fill,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset('assets/images/place_holder.png');
+                    },
+                  ),
                 ),
               ),
           ],
