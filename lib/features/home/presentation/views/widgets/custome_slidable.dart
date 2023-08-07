@@ -3,9 +3,10 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class CustomSlidable extends StatelessWidget {
   const CustomSlidable(
-      {super.key, required this.child, required this.onDismissed});
+      {super.key, required this.child, required this.onDismissed, this.onPressed});
   final Widget child;
   final VoidCallback onDismissed;
+  final void Function(BuildContext)? onPressed;
   @override
   Widget build(BuildContext context) {
     return Slidable(
@@ -16,7 +17,7 @@ class CustomSlidable extends StatelessWidget {
         dismissible: DismissiblePane(onDismissed: onDismissed),
         children: [
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: onPressed,
             backgroundColor: const Color(0xFFFE4A49),
             foregroundColor: Colors.white,
             icon: Icons.delete,

@@ -95,7 +95,7 @@ class HomeRepo {
     }
   }
 
- Future<Either<Failure, void>> updateIsCompleted(TaskModel task) async {
+  Future<Either<Failure, void>> updateIsCompleted(TaskModel task) async {
     FormData formData = FormData.fromMap(task.toJson());
     try {
       await _apiService.put(
@@ -111,4 +111,35 @@ class HomeRepo {
       return left(ServerFailure(e.toString()));
     }
   }
+
+  Future<Either<Failure, void>> deleteTask(int id) async {
+    try {
+      await _apiService.delete(
+        endPoint: 'Tasks/$id',
+      );
+      return right(null);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioExeotion(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  saveTasksOnCash(List<TaskModel> tasks) async {
+    
+  }
+
+  // method to save tasks on cash when get tasks from server using hive and update tasks if exist
+  // saveTasksOnCash(List<TaskModel> tasks) async {
+  //   var box = await Hive.openBox('tasks');
+  //   for (var task in tasks) {
+  //     if (box.containsKey(task.id)) {
+  //       box.put(task.id, task);
+  //     } else {
+  //       box.add(task);
+  //     }
+  //   }
+  // }
+
 }

@@ -43,7 +43,16 @@ class HomeViewBody extends ConsumerWidget {
                             .updateIsCompleted(index, newValue ?? false);
                       },
                     ),
-                    onDismissed: () {},
+                    onDismissed: () {
+                      ref
+                          .read(homeProvider.notifier)
+                          .deleteTask(tasks[index].id!);
+                    },
+                    onPressed: (context) {
+                      ref
+                          .read(homeProvider.notifier)
+                          .deleteTask(tasks[index].id!);
+                    },
                   ),
                 ),
               ),
@@ -59,5 +68,3 @@ class HomeViewBody extends ConsumerWidget {
     );
   }
 }
-
-

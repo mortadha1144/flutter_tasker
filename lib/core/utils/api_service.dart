@@ -21,12 +21,13 @@ class ApiService {
     headers: headers,
     contentType: Headers.multipartFormDataContentType,
   );
-  final _getOptions = Options(
+  final _getAndDeleteOptions = Options(
     headers: headers,
   );
 
   Future<dynamic> get({required String endPoin}) async {
-    Response response = await _dio.get('$_baseUrl$endPoin', options: _getOptions);
+    Response response =
+        await _dio.get('$_baseUrl$endPoin', options: _getAndDeleteOptions);
     return response.data;
   }
 
@@ -41,6 +42,14 @@ class ApiService {
     required String endPoint,
     Object? data,
   }) async {
-    await _dio.put('$_baseUrl$endPoint', data: data, options: _postAndPutOptions);
+    await _dio.put('$_baseUrl$endPoint',
+        data: data, options: _postAndPutOptions);
+  }
+
+  Future<void> delete({
+    required String endPoint,
+    Object? data,
+  }) async {
+    await _dio.delete('$_baseUrl$endPoint', options: _getAndDeleteOptions);
   }
 }

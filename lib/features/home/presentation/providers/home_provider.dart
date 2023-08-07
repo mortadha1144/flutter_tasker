@@ -27,18 +27,6 @@ class HomeNotifier extends StateNotifier<HomeState> {
     state = HomeState.loaded(tasks);
   }
 
-  Future<void> updateIsCompleted(int index, bool newValue) async {
-    TaskModel newTask = tasks[index].copyWith(completed: newValue);
-    var result = await _homeRepo.updateIsCompleted(newTask);
-    result.fold(
-      (fail) => null,
-      (success) {
-        tasks[index] = newTask;
-        state = HomeState.loaded(tasks);
-      },
-    );
-  }
-
   Future<void> fetchTasks() async {
     state = const HomeState.loading();
     var result = await _homeRepo.fetchTasks();
@@ -49,5 +37,29 @@ class HomeNotifier extends StateNotifier<HomeState> {
         state = HomeState.loaded(success);
       },
     );
+  }
+
+  Future<void> updateIsCompleted(int index, bool newValue) async {
+    TaskModel newTask = tasks[index].copyWith(completed: newValue);
+    var result = await _homeRepo.updateIsCompleted(newTask);
+    result.fold(
+      (fail) => null,
+      (success) async {
+        var getTask = await _homeRepo.getTask(newTask.id!);
+        getTask.fold((fail) => null, (success) {
+          tasks[index] = success;
+          state = HomeState.loaded(tasks);
+        });
+      },
+    );
+  }
+  
+
+  Future<void> deleteTask(int id) async {
+    var result = await _homeRepo.deleteTask(id);
+    result.fold((fail) => null, (success) {
+      tasks.removeWhere((element) => element.id == id);
+      state = HomeState.loaded(tasks);
+    });
   }
 }

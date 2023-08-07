@@ -5,8 +5,8 @@ import 'package:flutter_tasker/features/home/presentation/providers/home_provide
 
 import 'states/edit_task_state.dart';
 
-final viewTaskProvider =
-    StateNotifierProvider.family<ViewTaskNotifier, EditTaskState, int>(
+final viewTaskProvider = StateNotifierProvider.family
+    .autoDispose<ViewTaskNotifier, EditTaskState, int>(
   (ref, id) {
     TaskModel task = ref.watch(homeProvider.notifier).getTask(id);
     return ViewTaskNotifier(HomeRepo(), ref, task);
@@ -14,8 +14,8 @@ final viewTaskProvider =
 );
 
 class ViewTaskNotifier extends StateNotifier<EditTaskState> {
-  ViewTaskNotifier(this.homeRepo, this.ref,TaskModel task)
-      : super( EditTaskState.loaded(task));
+  ViewTaskNotifier(this.homeRepo, this.ref, TaskModel task)
+      : super(EditTaskState.loaded(task));
 
   Ref ref;
 
