@@ -1,16 +1,65 @@
-# flutter_tasker
+# Flutter Tasker App
 
-A new Flutter project.
+Description: Flutter Tasker is a productivity app that helps users manage their tasks and stay organized. It provides features such as user authentication, task tracking, profile management .
 
-## Getting Started
+### I'm using in this project :
+  - Riverpod State Management.
+  - Implement CRUD operations with API.
+  - Authenticate users using an API.
+  - MVVM Architecture Pattern.
 
-This project is a starting point for a Flutter application.
+### Features:
 
-A few resources to get you started if this is your first Flutter project:
+1. Login Screen:
+   - Implement a login screen with email and password fields.
+   - Perform form validation to ensure the input is valid.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. Task Management:
+   - Create a screen where users can add, view, and manage their tasks.
+   - Include options to add task details like title, description, due date, and priority.
+   - Implement CRUD (Create, Read, Update, Delete) functionality for tasks.
+   - Display tasks in a list format and allow users to mark tasks as completed.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. Image Upload:
+   - Enable users to upload images related to their tasks.
+   - Implement image selection from the device's gallery or camera.
+   - Compress and upload images to a server or a cloud storage service.
+   - Display the uploaded images within the task details.
+
+4. Profile Management:
+   - Design a profile screen where users can view and update their personal information.
+   - Fetch user data from an API and display it in the profile view.
+   - Allow users to edit their profile details and save changes through API calls.
+
+### Screen Shots :
+
+- Login Screen :
+<br>
+ <img src="screenshots/1.png" width="200" height="400">
+<br>
+<br>
+- Register Screen :
+<br>
+ <img src="screenshots/2.png" width="200" height="400">
+<br>
+<br>
+- Home Screen :
+<br>
+ <img src="screenshots/3.png" width="200" height="400">
+ <img src="screenshots/7.png" width="200" height="400">
+<br>
+<br>
+- Add Task Screen :
+<br>
+ <img src="screenshots/4.png" width="200" height="400">
+<br>
+<br>
+- View Task Screen :
+<br>
+ <img src="screenshots/5.png" width="200" height="400">
+<br>
+<br>
+- Edit Task Screen :
+<br>
+ <img src="screenshots/6.png" width="200" height="400">
+<br>
