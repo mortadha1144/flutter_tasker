@@ -4,6 +4,7 @@ Description: Flutter Tasker is a productivity app that helps users manage their 
 
 ### I'm using in this project :
   - Riverpod State Management.
+  - Freezed package.
   - Implement CRUD operations with API.
   - Authenticate users using an API.
   - MVVM Architecture Pattern.
