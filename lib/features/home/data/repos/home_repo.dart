@@ -17,14 +17,14 @@ class HomeRepo {
 
     try {
       Map<String, dynamic> data = await _apiService.post(
-        endPoin: 'Tasks',
+        endPoint: 'Tasks',
         data: formData,
       );
 
       return Right(TaskModel.fromJson(data));
     } catch (e) {
       if (e is DioException) {
-        return left(ServerFailure.fromDioExeotion(e));
+        return left(ServerFailure.fromDioException(e));
       }
       return left(ServerFailure(e.toString()));
     }
@@ -33,7 +33,7 @@ class HomeRepo {
   Future<Either<Failure, List<TaskModel>>> fetchTasks() async {
     try {
       var data = await _apiService.get(
-        endPoin: 'Tasks/list',
+        endPoint: 'Tasks/list',
       );
       List<TaskModel> tasks = [];
 
@@ -44,7 +44,7 @@ class HomeRepo {
       return right(tasks.reversed.toList());
     } catch (e) {
       if (e is DioException) {
-        return left(ServerFailure.fromDioExeotion(e));
+        return left(ServerFailure.fromDioException(e));
       }
       return left(ServerFailure(e.toString()));
     }
@@ -75,7 +75,7 @@ class HomeRepo {
       return right(null);
     } catch (e) {
       if (e is DioException) {
-        return left(ServerFailure.fromDioExeotion(e));
+        return left(ServerFailure.fromDioException(e));
       }
       return left(ServerFailure(e.toString()));
     }
@@ -84,12 +84,12 @@ class HomeRepo {
   Future<Either<Failure, TaskModel>> getTask(int id) async {
     try {
       var data = await _apiService.get(
-        endPoin: 'Tasks/$id',
+        endPoint: 'Tasks/$id',
       );
       return right(TaskModel.fromJson(data));
     } catch (e) {
       if (e is DioException) {
-        return left(ServerFailure.fromDioExeotion(e));
+        return left(ServerFailure.fromDioException(e));
       }
       return left(ServerFailure(e.toString()));
     }
@@ -106,7 +106,7 @@ class HomeRepo {
       return right(null);
     } catch (e) {
       if (e is DioException) {
-        return left(ServerFailure.fromDioExeotion(e));
+        return left(ServerFailure.fromDioException(e));
       }
       return left(ServerFailure(e.toString()));
     }
@@ -120,15 +120,13 @@ class HomeRepo {
       return right(null);
     } catch (e) {
       if (e is DioException) {
-        return left(ServerFailure.fromDioExeotion(e));
+        return left(ServerFailure.fromDioException(e));
       }
       return left(ServerFailure(e.toString()));
     }
   }
 
-  saveTasksOnCash(List<TaskModel> tasks) async {
-    
-  }
+  saveTasksOnCash(List<TaskModel> tasks) async {}
 
   // method to save tasks on cash when get tasks from server using hive and update tasks if exist
   // saveTasksOnCash(List<TaskModel> tasks) async {
@@ -141,5 +139,4 @@ class HomeRepo {
   //     }
   //   }
   // }
-
 }

@@ -31,7 +31,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
     state = const HomeState.loading();
     var result = await _homeRepo.fetchTasks();
     result.fold(
-      (faile) => state = HomeState.error(faile.errMessagel),
+      (faile) => state = HomeState.error(faile.errMessage),
       (success) {
         tasks.addAll(success);
         state = HomeState.loaded(success);
@@ -53,7 +53,6 @@ class HomeNotifier extends StateNotifier<HomeState> {
       },
     );
   }
-  
 
   Future<void> deleteTask(int id) async {
     var result = await _homeRepo.deleteTask(id);

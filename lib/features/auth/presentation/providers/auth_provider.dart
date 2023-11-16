@@ -18,7 +18,7 @@ class AuthProvider extends StateNotifier<AuthState> {
     state = const AuthState.loading();
     var result = await _authRepo.login(name, password);
     result.fold(
-      (faile) => state = AuthState.error(faile.errMessagel),
+      (fail) => state = AuthState.error(fail.errMessage),
       (success) => state = AuthState.loaded(success),
     );
   }

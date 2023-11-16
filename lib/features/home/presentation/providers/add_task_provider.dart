@@ -21,7 +21,7 @@ class AddTaskNotifier extends StateNotifier<AddTaskState> {
     state = const AddTaskState.loading();
     var result = await homeRepo.addTask(task);
     result.fold(
-      (faile) => state = AddTaskState.error(faile.errMessagel),
+      (faile) => state = AddTaskState.error(faile.errMessage),
       (success) {
         state = AddTaskState.loaded(success);
         ref.read(homeProvider.notifier).fetchTasks();

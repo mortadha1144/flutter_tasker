@@ -23,7 +23,7 @@ class AuthRepo {
     FormData formData = FormData.fromMap(userData);
     try {
       Map<String, dynamic> data = await _apiService.post(
-        endPoin: 'Users/register',
+        endPoint: 'Users/register',
         data: formData,
         options: Options(
           contentType: Headers.multipartFormDataContentType,
@@ -32,7 +32,7 @@ class AuthRepo {
       return Right(UserModel.fromJson(data));
     } catch (e) {
       if (e is DioException) {
-        return left(ServerFailure.fromDioExeotion(e));
+        return left(ServerFailure.fromDioException(e));
       }
       return left(ServerFailure(e.toString()));
     }
@@ -46,7 +46,7 @@ class AuthRepo {
 
     try {
       Map<String, dynamic> result = await _apiService.post(
-        endPoin: 'Users/login',
+        endPoint: 'Users/login',
         data: jsonEncode(data),
         options: Options(contentType: Headers.jsonContentType),
       );
@@ -58,7 +58,7 @@ class AuthRepo {
       return right(auth);
     } catch (e) {
       if (e is DioException) {
-        return left(ServerFailure.fromDioExeotion(e));
+        return left(ServerFailure.fromDioException(e));
       }
       return left(ServerFailure(e.toString()));
     }

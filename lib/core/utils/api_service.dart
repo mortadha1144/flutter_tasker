@@ -25,15 +25,15 @@ class ApiService {
     headers: headers,
   );
 
-  Future<dynamic> get({required String endPoin}) async {
+  Future<dynamic> get({required String endPoint}) async {
     Response response =
-        await _dio.get('$_baseUrl$endPoin', options: _getAndDeleteOptions);
+        await _dio.get('$_baseUrl$endPoint', options: _getAndDeleteOptions);
     return response.data;
   }
 
   Future<Map<String, dynamic>> post(
-      {required String endPoin, Object? data, Options? options}) async {
-    var response = await _dio.post('$_baseUrl$endPoin',
+      {required String endPoint, Object? data, Options? options}) async {
+    var response = await _dio.post('$_baseUrl$endPoint',
         data: data, options: options ?? _postAndPutOptions);
     return response.data;
   }

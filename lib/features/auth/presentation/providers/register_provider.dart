@@ -21,7 +21,7 @@ class RegisterProvider extends StateNotifier<RegisterState> {
     var result = await _authRepo.register(registerModel.toJson());
 
     result.fold(
-      (faile) => state = RegisterState.error(faile.errMessagel),
+      (faile) => state = RegisterState.error(faile.errMessage),
       (success) => state = RegisterState.loaded(success),
     );
   }

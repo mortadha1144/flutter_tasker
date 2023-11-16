@@ -28,7 +28,7 @@ class ViewTaskNotifier extends StateNotifier<EditTaskState> {
     var result = await homeRepo.getTask(id);
 
     result.fold(
-      (error) => state = EditTaskState.error(error.errMessagel),
+      (error) => state = EditTaskState.error(error.errMessage),
       (success) => state = EditTaskState.loaded(success),
     );
   }
@@ -38,7 +38,7 @@ class ViewTaskNotifier extends StateNotifier<EditTaskState> {
     var result = await homeRepo.updateTask(task: task, path: path);
 
     result.fold(
-      (fail) => state = EditTaskState.error(fail.errMessagel),
+      (fail) => state = EditTaskState.error(fail.errMessage),
       (success) async {
         await getTask(task.id!);
         _task = state.whenOrNull(
